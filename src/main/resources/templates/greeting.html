@@ -7,8 +7,8 @@
 <body>
 <p th:text="'Hello, ' + ${name} + '!'"/>
 
-<form action="#" method="post">
-    <input type="text">
+<form th:action="@{/}"method="post">
+    <textarea th:text="${name}"></textarea>
     <input class="submit" type="submit" name="" value="Send">
 </form>
 </body>
