@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="'Hello, ' + ${name} + '!'"/>
-
+<p th:text="'Федор сделай нормальную форму! ' + ${name} + '!'"/>
+<!--<p th:text="Напишите метод, для подсчета суммы диагоналей матрицы 5 на 5, со случайными значениями"/>-->
 <form th:action="@{/}"method="post">
-    <textarea th:text="${name}"></textarea>
-    <input class="submit" type="submit" name="" value="Send">
+    <textarea th:text ="${code}" name="code"></textarea>
+    <input class="submit" type="submit" name="send" value="Send">
 </form>
 </body>
 </html>
