@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 
-import org.mdkt.compiler.InMemoryJavaCompiler;
+import com.example.demo.entity.TaskEntity;
+import com.example.demo.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +16,22 @@ import java.util.Map;
 @Controller
 public class GreetingsController {
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     @GetMapping("/")
     public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World")
                                        String name, Map<String,Object> model) {
         model.put("name", name);
         return "greeting";
+    }
+
+    @GetMapping("/tasks")
+    public String showTasks(Map<String, Object> model){
+
+        Iterable<TaskEntity> tasks = taskRepository.findAll();
+        model.put("tasks", tasks);
+        return "tasks";
     }
 
     @PostMapping("/")
