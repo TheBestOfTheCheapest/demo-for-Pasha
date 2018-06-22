@@ -1,19 +1,19 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.entity.TaskEntity;
+import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import test1.MatrixSumm;
 import utills.FileWriter;
 
 import java.util.Map;
 
-@Controller
+@RestController
 public class GreetingsController {
 
     @Autowired
