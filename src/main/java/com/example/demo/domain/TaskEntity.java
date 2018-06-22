@@ -14,6 +14,10 @@ public class TaskEntity {
     private String name;
     private String task;
 
+    public TaskEntity(){
+
+    }
+
     public TaskEntity(String name, String task) {
         this.name = name;
         this.task = task;

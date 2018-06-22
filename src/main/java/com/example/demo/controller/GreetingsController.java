@@ -11,27 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import test1.MatrixSumm;
 import utills.FileWriter;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class GreetingsController {
 
-    @Autowired
-    private TaskRepository taskRepository;
 
     @GetMapping("/")
     public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World")
                                        String name, Map<String,Object> model) {
         model.put("name", name);
         return "greeting";
-    }
-
-    @GetMapping("/tasks")
-    public String showTasks(Map<String, Object> model){
-
-        Iterable<TaskEntity> tasks = taskRepository.findAll();
-        model.put("tasks", tasks);
-        return "tasks";
     }
 
     @PostMapping("/")
