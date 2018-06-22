@@ -23,6 +23,7 @@ public class TaskController {
 
     @GetMapping()
     public List<TaskEntity> showAllTasks(){
+        log.info("Showed all tasks");
         List<TaskEntity> tasks = taskService.findAll();
 //        if(tasks.isEmpty()){
 //            return new ArrayList<TaskEntity>();
