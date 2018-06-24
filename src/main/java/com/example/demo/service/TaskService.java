@@ -17,6 +17,10 @@ public class TaskService {
         return taskRepo.findAll();
     }
 
+    public TaskEntity findTaskById(int id){
+        return taskRepo.findById(id);
+    }
+
     public void add(String name, String text){
         TaskEntity task = new TaskEntity();
         task.setName(name);

@@ -31,6 +31,13 @@ public class TaskController {
         return tasks;
     }
 
+    @GetMapping("{id}")
+    public TaskEntity showConcreteTask(@PathVariable int id){
+        log.info("Displayed task {1}", id);
+        TaskEntity task = taskService.findTaskById(id);
+        return task;
+    }
+
     //ToDo remake
     @PostMapping("/tasks")
     public void addTask(@RequestParam String name, @RequestParam String text){
