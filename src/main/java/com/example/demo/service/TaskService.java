@@ -21,10 +21,10 @@ public class TaskService {
         return taskRepo.findById(id);
     }
 
-    public void add(String name, String text){
+    public void add(String taskTitle, String taskText){
         TaskEntity task = new TaskEntity();
-        task.setName(name);
-        task.setTask(text);
+        task.setTaskTitle(taskTitle);
+        task.setTaskText(taskText);
         taskRepo.save(task);
     }
 }

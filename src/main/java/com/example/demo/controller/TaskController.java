@@ -5,6 +5,9 @@ import com.example.demo.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,15 +35,19 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    public TaskEntity showConcreteTask(@PathVariable int id){
+    public ResponseEntity<TaskEntity> showConcreteTask(@PathVariable int id){
         log.info("Displayed task {1}", id);
         TaskEntity task = taskService.findTaskById(id);
-        return task;
+        return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
     //ToDo remake
-    @PostMapping("/tasks")
-    public void addTask(@RequestParam String name, @RequestParam String text){
-        taskService.add(name, text);
+    @PostMapping("/add")
+    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText){
+        taskService.add(taskTitle, taskText);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        return new ResponseEntity<>(headers, HttpStatus.I_AM_A_TEAPOT);
     }
 }

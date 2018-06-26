@@ -11,16 +11,18 @@ public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String name;
-    private String task;
+    private String taskTitle;
+    private String taskText;
+    private String sourceSample;
 
     public TaskEntity(){
 
     }
 
-    public TaskEntity(String name, String task) {
-        this.name = name;
-        this.task = task;
+    public TaskEntity(String taskTitle, String taskText, String sourceSample) {
+        this.taskTitle = taskTitle;
+        this.taskText = taskText;
+        this.sourceSample = sourceSample;
     }
 
     public Integer getId() {
@@ -31,19 +33,27 @@ public class TaskEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskTitle() {
+        return taskTitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
     }
 
-    public String getTask() {
-        return task;
+    public String getTaskText() {
+        return taskText;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setTaskText(String taskText) {
+        this.taskText = taskText;
+    }
+
+    public String getSourceSample() {
+        return sourceSample;
+    }
+
+    public void setSourceSample(String sourceSample) {
+        this.sourceSample = sourceSample;
     }
 }
