@@ -24,7 +24,7 @@ public class TaskController {
     TaskService taskService;
 
 
-    @GetMapping()
+    @PostMapping()
     public List<TaskEntity> showAllTasks(){
         log.info("Showed all tasks");
         List<TaskEntity> tasks = taskService.findAll();
@@ -43,8 +43,9 @@ public class TaskController {
 
     //ToDo remake
     @PostMapping("/add")
-    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText){
-        taskService.add(taskTitle, taskText);
+    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
+                                              @RequestParam String sourceSample){
+        taskService.add(taskTitle, taskText, sourceSample);
 
         HttpHeaders headers = new HttpHeaders();
 
