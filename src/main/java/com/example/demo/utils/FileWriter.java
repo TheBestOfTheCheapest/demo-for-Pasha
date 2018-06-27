@@ -1,4 +1,4 @@
-package utills;
+package com.example.demo.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;

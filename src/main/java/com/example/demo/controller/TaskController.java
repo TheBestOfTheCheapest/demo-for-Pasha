@@ -25,7 +25,7 @@ public class TaskController {
 
 
     @PostMapping()
-    public List<TaskEntity> showAllTasks(){
+    public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
         List<TaskEntity> tasks = taskService.findAll();
 //        if(tasks.isEmpty()){
@@ -35,7 +35,7 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<TaskEntity> showConcreteTask(@PathVariable int id){
+    public ResponseEntity<TaskEntity> showConcreteTask(@PathVariable int id) {
         log.info("Displayed task {1}", id);
         TaskEntity task = taskService.findTaskById(id);
         return new ResponseEntity<>(task, HttpStatus.OK);
@@ -44,11 +44,18 @@ public class TaskController {
     //ToDo remake
     @PostMapping("/add")
     public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
-                                              @RequestParam String sourceSample){
+                                              @RequestParam String sourceSample) {
         taskService.add(taskTitle, taskText, sourceSample);
 
         HttpHeaders headers = new HttpHeaders();
 
         return new ResponseEntity<>(headers, HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> getResult(@RequestParam String taskId, @RequestParam String solutionId,
+                                       @RequestParam String solution) {
+        String result = taskService.getResult(taskId, solutionId, solution);
+        return new ResponseEntity<String>(result, HttpStatus.I_AM_A_TEAPOT );
     }
 }

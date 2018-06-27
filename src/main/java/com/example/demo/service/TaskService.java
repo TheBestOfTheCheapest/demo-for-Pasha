@@ -28,4 +28,11 @@ public class TaskService {
         task.setSourceSample(sourceSample);
         taskRepo.save(task);
     }
+
+    public String getResult(String taskId, String solutionId, String solution){
+        //todo достать параметры из базы и определить name
+        //todo найти класс шаблона задачи
+        //todo найти класс шаблона задачи
+        return "42";
+    }
 }
