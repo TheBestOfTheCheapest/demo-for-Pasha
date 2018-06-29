@@ -30,9 +30,10 @@ public class TaskService {
     }
 
     public String getResult(String taskId, String solutionId, String solution){
-        //todo достать параметры из базы и определить name
+        //todo найти и прочитать файл по задаче
         //todo найти класс шаблона задачи
-        //todo найти класс шаблона задачи
+        //todo передать в TaskRunner код и шаблон
+        //todo вернуть результат
         return "42";
     }
 }
