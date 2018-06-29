@@ -14,7 +14,7 @@ public class MyTest {
                 "        for (int i = 0; i < 5; i++) {\n" +
                 "            for (int j = 0; j < 5; j++) {\n" +
                 "                if ((i == j) || (i == (5 - j - 1)))\n" +
-                "                    summ += array[i][j];\n" +
+                "                    summ += array[i][j]\n" +
                 "            }\n" +
                 "        }\n" +
                 "        return summ;\n" +

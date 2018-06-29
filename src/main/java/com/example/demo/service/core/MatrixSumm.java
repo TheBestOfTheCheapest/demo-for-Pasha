@@ -1,60 +1,60 @@
-package com.example.demo.service.core;
-
-import java.util.Random;
-
-public class MatrixSumm {
-    private int[][] a = new int[5][5];
-
-    public MatrixSumm() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                a[i][j] = new Random().nextInt(9);
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        MatrixSumm matrixSumm = new MatrixSumm();
-        matrixSumm.test();
-    }
-
-    private int calculateMatrix(int[][] array) {
-        int summ = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; i < 5; i++) {
-                if (i == j)
-                    summ += array[i][j];
-            }
-        }
-        return summ;
-    }
-
-    public String test() {
-        int summ = 0;
-        String s = "fail";
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; i < 5; i++) {
-                if ((i == j))
-                    summ += a[i][j];
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(" " + a[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println(summ);
-        System.out.println(calculateMatrix(a));
-        if (summ == calculateMatrix(a)) {
-            s = "success";
-        }
-        System.out.println(s);
-        return s;
-    }
-}
-
-
-
-
+//package com.example.demo.service.core;
+//
+//
+//import java.io.IOException;
+//import java.util.Random;
+//
+//public class MatrixSumm {
+//    private int[][] a = new int[5][5];
+//    private String matrix = "";
+//    public MatrixSumm() {
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j < 5; j++) {
+//                a[i][j] = new Random().nextInt(9);
+//                matrix+=a[i][j];
+//            }
+//            matrix+="\n";
+//        }
+//    }
+//
+//    public static void main(String[] args) throws IOException {
+//        MatrixSumm matrixSumm = new MatrixSumm();
+//        matrixSumm.test();
+//    }
+//
+////REPLACE
+//
+////    private int calculateMatrix(int[][] array) {
+////        int summ = 0;
+////        for (int i = 0; i < 5; i++) {
+////            for (int j = 0; j < 5; j++) {
+////                if ((i == j) || (i == (5 - j - 1)))
+////                    summ += array[i][j];
+////            }
+////        }
+////        return summ;
+////    }
+//
+//    public String test() throws IOException {
+//        int summTest = 0;
+//        int summMethod = 0;
+//        String s = "fail";
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j < 5; j++) {
+//                if ((i == j) || (i == (5 - j - 1)))
+//                    summTest += a[i][j];
+//            }
+//        }
+//
+//        summMethod = calculateMatrix(a);
+//
+//        if (summTest == summMethod) {
+//            s = "success";
+//        } else {
+//            s += ", your answer - " + summMethod + " , but expected - " + summTest + "\n" + matrix;
+//        }
+//
+//        TaskLogger.writeLog("Test 1 - " + s);
+//        return s;
+//    }
+//}
