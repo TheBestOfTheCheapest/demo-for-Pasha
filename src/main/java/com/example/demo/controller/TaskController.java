@@ -36,9 +36,9 @@ public class TaskController {
         return tasks;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/task")
     @ResponseBody
-    public ResponseEntity<TaskEntity> showConcreteTask(@PathVariable("id") int id) {
+    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
         log.info("Displayed task {1}", id);
         TaskEntity task = taskService.findTaskById(id);
         return new ResponseEntity<>(task, HttpStatus.OK);
