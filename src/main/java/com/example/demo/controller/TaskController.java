@@ -5,16 +5,11 @@ import com.example.demo.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("tasks")
@@ -29,9 +24,8 @@ public class TaskController {
     @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
-        //        if(tasks.isEmpty()){
-//            return new ArrayList<TaskEntity>();
-//        }
+        if(taskService.findAll().isEmpty())
+            log.info("No tasks");
         return taskService.findAll();
     }
 
@@ -40,6 +34,10 @@ public class TaskController {
     public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
         log.info("Displayed task {1}", id);
         TaskEntity task = taskService.findTaskById(id);
+        if (task==null) {
+            log.error("Request to the task with id {1}, which not exist", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
