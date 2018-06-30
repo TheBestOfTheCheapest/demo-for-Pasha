@@ -1,29 +1,24 @@
-package com.example.demo.domain;
+package com.example.demo.service.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.demo.domain.TaskEntity;
 
-@Entity
-public class TaskEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class TaskDTO {
     private Integer id;
     private String taskTitle;
     private String taskText;
     private String sourceSample;
 
-    public TaskEntity(){
+    public TaskDTO() {
 
     }
 
-    public TaskEntity(String taskTitle, String taskText, String sourceSample) {
-        this.taskTitle = taskTitle;
-        this.taskText = taskText;
-        this.sourceSample = sourceSample;
+    public TaskDTO(TaskEntity task) {
+        this.id = task.getId();
+        this.taskTitle = task.getTaskTitle();
+        this.taskText = task.getTaskText();
+        this.sourceSample = task.getSourceSample();
     }
+
 
     public Integer getId() {
         return id;
@@ -56,6 +51,4 @@ public class TaskEntity {
     public void setSourceSample(String sourceSample) {
         this.sourceSample = sourceSample;
     }
-
-
 }

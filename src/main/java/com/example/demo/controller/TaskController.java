@@ -5,57 +5,62 @@ import com.example.demo.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("task")
+@RequestMapping("tasks")
 public class TaskController {
 
-    public static final Logger log = LoggerFactory.getLogger(TaskController.class);
+    private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     TaskService taskService;
 
 
-    @PostMapping()
+    @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
-        List<TaskEntity> tasks = taskService.findAll();
-//        if(tasks.isEmpty()){
-//            return new ArrayList<TaskEntity>();
-//        }
-        return tasks;
+        if(taskService.findAll().isEmpty())
+            log.info("No tasks");
+        return taskService.findAll();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<TaskEntity> showConcreteTask(@PathVariable int id) {
+    @GetMapping("/task")
+    @ResponseBody
+    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
         log.info("Displayed task {1}", id);
         TaskEntity task = taskService.findTaskById(id);
+        if (task==null) {
+            log.error("Request to the task with id {1}, which not exist", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
-    //ToDo remake
     @PostMapping("/add")
     public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
                                               @RequestParam String sourceSample) {
-        taskService.add(taskTitle, taskText, sourceSample);
-
-        HttpHeaders headers = new HttpHeaders();
-
-        return new ResponseEntity<>(headers, HttpStatus.I_AM_A_TEAPOT);
+        log.info("New task was added");
+        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
+        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 
-    @PostMapping()
-    public ResponseEntity<?> getResult(@RequestParam String taskId, @RequestParam String solutionId,
+    @PostMapping("/solution")
+    public ResponseEntity<?> getResult(@RequestParam int taskId, @RequestParam String solutionId,
                                        @RequestParam String solution) {
+        log.info("A solution to the task {1} was sent", taskId);
         String result = taskService.getResult(taskId, solutionId, solution);
-        return new ResponseEntity<String>(result, HttpStatus.I_AM_A_TEAPOT );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/task")
+    public boolean deleteTask(@RequestParam int id){
+        log.info("Task {1} was deleted", id);
+        taskService.deleteTask(id);
+        return true;
     }
 }
