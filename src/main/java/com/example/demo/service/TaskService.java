@@ -39,4 +39,8 @@ public class TaskService {
         //todo вернуть результат
         return "42";
     }
+
+    public void deleteTask(int id) {
+        taskRepo.delete(findTaskById(id));
+    }
 }

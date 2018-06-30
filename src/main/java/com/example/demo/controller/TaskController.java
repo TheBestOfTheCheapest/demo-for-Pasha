@@ -46,6 +46,7 @@ public class TaskController {
     @PostMapping("/add")
     public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
                                               @RequestParam String sourceSample) {
+        log.info("New task was added");
         TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
@@ -53,7 +54,15 @@ public class TaskController {
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestParam int taskId, @RequestParam String solutionId,
                                        @RequestParam String solution) {
+        log.info("A solution to the task {1} was sent", taskId);
         String result = taskService.getResult(taskId, solutionId, solution);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/task")
+    public boolean deleteTask(@RequestParam int id){
+        log.info("Task {1} was deleted", id);
+        taskService.deleteTask(id);
+        return true;
     }
 }
