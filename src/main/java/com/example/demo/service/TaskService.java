@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,13 @@ public class TaskService {
         return taskRepo.findById(id);
     }
 
-    public void add(String taskTitle, String taskText, String sourceSample){
+    public TaskEntity add(String taskTitle, String taskText, String sourceSample){
         TaskEntity task = new TaskEntity();
         task.setTaskTitle(taskTitle);
         task.setTaskText(taskText);
         task.setSourceSample(sourceSample);
         taskRepo.save(task);
+        return task;
     }
 
     public String getResult(String taskId, String solutionId, String solution){

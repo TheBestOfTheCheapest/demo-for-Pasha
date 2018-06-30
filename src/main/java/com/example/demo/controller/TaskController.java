@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class TaskController {
     TaskService taskService;
 
 
-    @PostMapping()
+    @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
         List<TaskEntity> tasks = taskService.findAll();
@@ -45,11 +47,11 @@ public class TaskController {
     @PostMapping("/add")
     public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
                                               @RequestParam String sourceSample) {
-        taskService.add(taskTitle, taskText, sourceSample);
+        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
 
         HttpHeaders headers = new HttpHeaders();
 
-        return new ResponseEntity<>(headers, HttpStatus.I_AM_A_TEAPOT);
+        return new ResponseEntity<TaskEntity>(newTask, HttpStatus.CREATED);
     }
 
     @PostMapping()
