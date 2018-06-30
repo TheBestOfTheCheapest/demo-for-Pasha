@@ -56,4 +56,6 @@ public class TaskEntity {
     public void setSourceSample(String sourceSample) {
         this.sourceSample = sourceSample;
     }
+
+
 }

@@ -31,7 +31,8 @@ public class TaskService {
         return task;
     }
 
-    public String getResult(String taskId, String solutionId, String solution){
+    public String getResult(int taskId, String solutionId, String solution){
+        String taskTitle = taskRepo.findById(taskId).getTaskTitle();
         //todo найти и прочитать файл по задаче
         //todo найти класс шаблона задачи
         //todo передать в TaskRunner код и шаблон
