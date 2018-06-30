@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("tasks")
 public class TaskController {
 
-    public static final Logger log = LoggerFactory.getLogger(TaskController.class);
+    private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     TaskService taskService;
@@ -29,11 +29,10 @@ public class TaskController {
     @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
-        List<TaskEntity> tasks = taskService.findAll();
-//        if(tasks.isEmpty()){
+        //        if(tasks.isEmpty()){
 //            return new ArrayList<TaskEntity>();
 //        }
-        return tasks;
+        return taskService.findAll();
     }
 
     @GetMapping("/task")
@@ -48,13 +47,13 @@ public class TaskController {
     public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
                                               @RequestParam String sourceSample) {
         TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
-        return new ResponseEntity<TaskEntity>(newTask, HttpStatus.CREATED);
+        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestParam int taskId, @RequestParam String solutionId,
                                        @RequestParam String solution) {
         String result = taskService.getResult(taskId, solutionId, solution);
-        return new ResponseEntity<String>(result, HttpStatus.OK );
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
