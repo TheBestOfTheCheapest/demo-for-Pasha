@@ -1,0 +1,47 @@
+
+import com.example.demo.service.core.TaskLogger;
+
+import java.io.IOException;
+
+public class TextRefactor {
+    private static String text = "— Чssssтssssо?! \"Бssезвssssреsssдsssнssа\"? Этоsss вssсе, чsssтsоss сsssкssssазаsssно о Зеsssмлssssе?! Оssднsо слsssовsssо!\n" +
+            "Фsssоssрsssд поsжssаsл пssлsssечsssssаssмssssиss:\n" +
+            "— Вss ssГssssалsакsтикsе sсsтsо мsилsлssиssаsрssдsов sзвsезsд, а еsмssкоsсть микропроцsssssssессоров кнsssижsssкssи оsssгрsssаsниsssченssа. К томsу же о Зsssемле в оsssбщеsssм-ssтssо ниsssкто sssи нsssе слsssышsssал.\n" +
+            "— Нssssо тепsеsрsь, надsеюсь, sssтssыsss ssssssоssss ssнsеsssйs рssасssсsкsssаssssжsешь?\n" +
+            "— ssssЯ нsssаsпsssиsssсаsssл и sпереsssдал иsssзsssдssателюs sнsоssвsуsю sсsтsаsтsью. ssЕsssеs, кsssонssечно,s ssподsssреsssдактsируют, sнssоs сssуssтsьss ssсохранssится.\n" +
+            "ssss— ssЧsssтsssоss жssssе тsssаssм бsуssдssssssеssтss сsкsssаssзано?\n" +
+            "— \"ssВss оssssснsоsвномs sssбsssезsврsеsssдsssнsаss\", — пsрsоssизsнеsssсs sФоsрsд и смsssущsssеsнно sкsаsшлssяsнsssул.";
+
+//    private final static String resultText = "— Что?! \"Безвредна\"? Это все, что сказано о Земле?! Одно слово!\n" +
+//            "Форд пожал плечами:\n" +
+//            "— В Галактике сто миллиардов звезд, а емкость микропроцессоров книжки ограничена. К тому же о Земле в общем-то никто и не слышал.\n" +
+//            "— Но теперь, надеюсь, ты о ней расскажешь?\n" +
+//            "— Я написал и передал издателю новую статью. Ее, конечно, подредактируют, но суть сохранится.\n" +
+//            "— Что же там будет сказано?\n" +
+//            "— \"В основном безвредна\", — произнес Форд и смущенно кашлянул.";
+
+
+    public static void main(String[] args) throws IOException {
+             TextRefactor textRefactor = new TextRefactor();
+             textRefactor.test(textRefactor.result(text));
+    }
+
+//REPLACE
+
+//    public int result(String text) {
+//        return text.replaceAll("s", "").lastIndexOf("Ф");
+//    }
+
+    public void test(int index) throws IOException {
+      String log = "fail";
+      int answer =result(text);
+      if (416==answer){
+          log = "success";
+      }
+      else {
+          log += ", your answer - " + answer+ " , but expected another answer, may be your text refactor code is not correct";
+      }
+      TaskLogger.writeLog(log);
+    }
+
+}

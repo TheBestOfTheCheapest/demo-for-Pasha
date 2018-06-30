@@ -9,16 +9,9 @@ public class MyTest {
     public static void main(String[] args) throws Exception {
 
         TaskRunner taskRunner = new TaskRunner();
-                String source = "    private int calculateMatrix(int[][] array) {\n" +
-                "        int summ = 0;\n" +
-                "        for (int i = 0; i < 5; i++) {\n" +
-                "            for (int j = 0; j < 5; j++) {\n" +
-                "                if ((i == j) || (i == (5 - j - 1)))\n" +
-                "                    summ += array[i][j];\n" +
-                "            }\n" +
-                "        }\n" +
-                "        return summ;\n" +
-                "    }";
-        System.out.println(taskRunner.run(Searcher.getSource("MatrixSumm"),source, "MatrixSumm"));
+                String source = "    public int result(String text) {\n" +
+                        "        return text.replaceAll(\"s\", \"\").lastIndexOf(\"Ф\");\n" +
+                        "    }";
+        System.out.println(taskRunner.run(Searcher.getSource("TextRefactor"),source, "TextRefactor"));
     }
 }
