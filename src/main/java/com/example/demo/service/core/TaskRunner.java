@@ -13,8 +13,6 @@ import java.nio.file.Paths;
 public class TaskRunner {
     private ByteArrayOutputStream trace = new ByteArrayOutputStream(2048);
     public String run(String sourceTemplate, String source, String taskName) throws Exception {
-        if(sourceTemplate.equals(null))
-            return "Ваша задача, не была найдена в системе";
 
         File root = new File(System.getProperty("user.dir")); // On Windows running on C:\, this is C:\java.
         File sourceFile = new File(root.getPath(), taskName + ".java");
@@ -43,7 +41,7 @@ public class TaskRunner {
             Files.delete(sourceFile.toPath());
             Files.delete(Paths.get(sourceFile.getPath().replace(".java", ".class")));
         }catch (IOException ioe){
-            System.out.println(ioe);
+            ioe.printStackTrace();
         }
             return TaskLogger.readLog();
 

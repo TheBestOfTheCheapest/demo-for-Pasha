@@ -8,15 +8,12 @@ import java.nio.file.Paths;
 
 public class Searcher {
 
-    public static String getSource(String name)throws IOException {
-        File file =searchFile(name);
-        if(!file.equals(null)){
-          return new String(Files.readAllBytes(Paths.get(file.getPath())), StandardCharsets.UTF_8);
-        }
-        return null;
+    public static String getSource(String name) throws IOException {
+        File file = searchFile(name);
+        return new String(Files.readAllBytes(Paths.get(file.getPath())), StandardCharsets.UTF_8);
     }
 
-    public static File searchFile(String name) throws IOException {
+    private static File searchFile(String name) {
         File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\SourceTemplate");
         for (File f : folder.listFiles()) {
             if ((name + ".txt").equals(f.getName())) {
