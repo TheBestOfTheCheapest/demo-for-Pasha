@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
 import org.slf4j.Logger;
@@ -24,8 +25,10 @@ public class TaskController {
     @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
-        if(taskService.findAll().isEmpty())
+        if(taskService.findAll().isEmpty()) {
             log.info("No tasks");
+            throw new NotFoundException();
+        }
         return taskService.findAll();
     }
 
@@ -36,7 +39,7 @@ public class TaskController {
         TaskEntity task = taskService.findTaskById(id);
         if (task==null) {
             log.error("Request to the task with id {1}, which not exist", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
