@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class TaskEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String taskTitle;
     private String taskText;
