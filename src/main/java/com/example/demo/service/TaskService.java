@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.core.Searcher;
 import com.example.demo.service.core.TaskRunner;
 import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class TaskService {
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
         try {
-            result = taskRunner.run("MatrixSumm", solution, taskTitle); //MatrixSumm как заглушка
+            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution, taskTitle); //MatrixSumm как заглушка
         } catch (Exception e) {
             e.printStackTrace();
         }
