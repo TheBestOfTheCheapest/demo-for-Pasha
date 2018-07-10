@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:9000")
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
@@ -32,7 +33,7 @@ public class TaskController {
         return taskService.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:9000")
+//    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
