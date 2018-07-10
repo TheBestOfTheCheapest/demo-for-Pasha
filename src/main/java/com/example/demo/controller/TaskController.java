@@ -32,6 +32,7 @@ public class TaskController {
         return taskService.findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
