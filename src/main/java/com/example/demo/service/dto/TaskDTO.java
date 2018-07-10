@@ -3,7 +3,7 @@ package com.example.demo.service.dto;
 import com.example.demo.domain.TaskEntity;
 
 public class TaskDTO {
-    private Integer id;
+    private Integer taskId;
     private String taskTitle;
     private String taskText;
     private String sourceSample;
@@ -13,19 +13,19 @@ public class TaskDTO {
     }
 
     public TaskDTO(TaskEntity task) {
-        this.id = task.getId();
+        this.taskId = task.getTaskId();
         this.taskTitle = task.getTaskTitle();
         this.taskText = task.getTaskText();
         this.sourceSample = task.getSourceSample();
     }
 
 
-    public Integer getId() {
-        return id;
+    public Integer getTaskId() {
+        return taskId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskTitle() {

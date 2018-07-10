@@ -20,8 +20,8 @@ public class TaskService {
         return taskRepo.findAll();
     }
 
-    public TaskEntity findTaskById(int id){
-        return taskRepo.findById(id);
+    public TaskEntity findTaskById(int taskId){
+        return taskRepo.findByTaskId(taskId);
     }
 
     public TaskEntity add(String taskTitle, String taskText, String sourceSample){
@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     public String getResult(int taskId, String solutionId, String solution){
-        String taskTitle = taskRepo.findById(taskId).getTaskTitle();
+        String taskTitle = taskRepo.findByTaskId(taskId).getTaskTitle();
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
         try {
@@ -49,7 +49,7 @@ public class TaskService {
         return result;
     }
 
-    public void deleteTask(int id) {
-        taskRepo.delete(findTaskById(id));
+    public void deleteTask(int taskId) {
+        taskRepo.delete(findTaskById(taskId));
     }
 }

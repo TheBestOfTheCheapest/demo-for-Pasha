@@ -35,11 +35,11 @@ public class TaskController {
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
-    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int id) {
-        log.info("Displayed task {1}", id);
-        TaskEntity task = taskService.findTaskById(id);
+    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int taskId) {
+        log.info("Displayed task {1}", taskId);
+        TaskEntity task = taskService.findTaskById(taskId);
         if (task==null) {
-            log.error("Request to the task with id {1}, which not exist", id);
+            log.error("Request to the task with id {1}, which not exist", taskId);
             throw new NotFoundException();
         }
         return new ResponseEntity<>(task, HttpStatus.OK);
@@ -62,9 +62,9 @@ public class TaskController {
     }
 
     @DeleteMapping("/task")
-    public boolean deleteTask(@RequestParam int id){
-        log.info("Task {1} was deleted", id);
-        taskService.deleteTask(id);
+    public boolean deleteTask(@RequestParam int taskId){
+        log.info("Task {1} was deleted", taskId);
+        taskService.deleteTask(taskId);
         return true;
     }
 }

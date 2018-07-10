@@ -1,16 +1,13 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TaskEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer taskId;
     private String taskTitle;
     private String taskText;
     private String sourceSample;
@@ -25,12 +22,12 @@ public class TaskEntity {
         this.sourceSample = sourceSample;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getTaskId() {
+        return taskId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskTitle() {
