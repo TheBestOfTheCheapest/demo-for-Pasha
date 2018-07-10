@@ -29,7 +29,7 @@ public class TaskRunner {
 
             // Load and instantiate compiled class.
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{root.toURI().toURL()});
-            Class<?> cls = Class.forName(taskName, true, classLoader); // Should print "hello".
+            Class<?> cls = Class.forName(taskName, true, classLoader);
             cls.getDeclaredMethod("main", new Class[]{String[].class})
                     .invoke(null, new Object[]{null});
 
@@ -44,7 +44,5 @@ public class TaskRunner {
             ioe.printStackTrace();
         }
             return TaskLogger.readLog();
-
-
     }
 }
