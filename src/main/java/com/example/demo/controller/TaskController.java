@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.exceptions.NotFoundException;
+import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
 import org.slf4j.Logger;
@@ -54,10 +55,9 @@ public class TaskController {
     }
 
     @PostMapping("/solution")
-    public ResponseEntity<?> getResult(@RequestParam int taskId, @RequestParam String solutionId,
-                                       @RequestParam String solution) {
-        log.info("A solution to the task {1} was sent", taskId);
-        String result = taskService.getResult(taskId, solutionId, solution);
+    public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
+        log.info("A solution to the task {1} was sent");
+        String result = taskService.getResult(solution);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

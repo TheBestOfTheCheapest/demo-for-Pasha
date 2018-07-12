@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.service.core.Searcher;
@@ -33,12 +34,12 @@ public class TaskService {
         return task;
     }
 
-    public String getResult(int taskId, String solutionId, String solution){
-        String taskTitle = taskRepo.findByTaskId(taskId).getTaskTitle();
+    public String getResult(SolutionEntity solution){
+        String taskTitle = taskRepo.findByTaskId(solution.getTaskId()).getTaskTitle();
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
         try {
-            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution, taskTitle); //MatrixSumm как заглушка
+            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolution(), taskTitle); //MatrixSumm как заглушка
         } catch (Exception e) {
             e.printStackTrace();
         }
