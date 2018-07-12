@@ -41,6 +41,7 @@ public class TaskService {
         try {
             result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolution(), taskTitle); //MatrixSumm как заглушка
         } catch (Exception e) {
+            result = "qwertyuio";
             e.printStackTrace();
         }
         //todo найти и прочитать файл по задаче

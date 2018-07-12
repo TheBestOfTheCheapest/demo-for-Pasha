@@ -58,7 +58,7 @@ public class TaskController {
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
         log.info("A solution to the task {1} was sent");
-        String result = taskService.getResult(solution);
+        String result = "{ \"result\" : \"" + taskService.getResult(solution) + "\"}";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -34,7 +34,7 @@ public class MatrixSumm {
 //        return summ;
 //    }
 
-    public String test() throws IOException {
+   public String test() throws IOException {
         int summTest = 0;
         int summMethod = 0;
         String s = "fail";
