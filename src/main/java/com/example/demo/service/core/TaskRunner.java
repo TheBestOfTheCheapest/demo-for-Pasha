@@ -34,7 +34,7 @@ public class TaskRunner {
                     .invoke(null, new Object[]{null});
 
         }catch (Exception e){
-            TaskLogger.writeLog("Compilation failure\n" + trace);
+            TaskLogger.writeLog("Compilation failure" + trace);
         }
         try {
             //Delete created files
