@@ -43,6 +43,6 @@ public class TaskRunner {
         }catch (IOException ioe){
             ioe.printStackTrace();
         }
-            return TaskLogger.readLog();
+            return TaskLogger.readLog().replace("\\", "/");
     }
 }
