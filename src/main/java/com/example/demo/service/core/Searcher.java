@@ -14,7 +14,11 @@ public class Searcher {
     }
 
     private static File searchFile(String name) {
-        File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\SourceTemplate");
+        String fs = System.getProperty("file.separator");
+        System.out.println("System: " + System.getProperty("os.name") + "; Separator: " + fs);
+        StringBuilder b = new StringBuilder(fs).append("src").append(fs).append("main").append(fs).append("resources").append(fs).append("SourceTemplate");
+        String filePath = b.toString();
+        File folder = new File(System.getProperty("user.dir") + filePath);
         for (File f : folder.listFiles()) {
             if ((name + ".txt").equals(f.getName())) {
                 return f;

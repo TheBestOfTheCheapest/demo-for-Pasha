@@ -14,7 +14,7 @@ public class TaskLogger {
     }
 
     public static String readLog() throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "\\log.txt");
+        Path path = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + "log.txt");
         String log = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
         try {
             deleteLog(path);
