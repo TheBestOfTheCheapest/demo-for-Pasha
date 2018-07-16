@@ -3,15 +3,15 @@ package com.example.demo.domain;
 public class SolutionEntity {
     private int taskId;
     private String solutionId;
-    private String solution;
+    private String solutionValue;
 
     public SolutionEntity() {
     }
 
-    public SolutionEntity(int taskId, String solutionId, String solution) {
+    public SolutionEntity(int taskId, String solutionId, String solutionValue) {
         this.taskId = taskId;
         this.solutionId = solutionId;
-        this.solution = solution;
+        this.solutionValue = solutionValue;
     }
 
     public int getTaskId() {
@@ -31,10 +31,10 @@ public class SolutionEntity {
     }
 
     public String getSolution() {
-        return solution;
+        return solutionValue;
     }
 
-    public void setSolution(String solution) {
-        this.solution = solution;
+    public void setSolution(String solutionValue) {
+        this.solutionValue = solutionValue;
     }
 }
