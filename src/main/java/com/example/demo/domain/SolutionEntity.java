@@ -30,11 +30,11 @@ public class SolutionEntity {
         this.solutionId = solutionId;
     }
 
-    public String getSolution() {
+    public String getSolutionValue() {
         return solutionValue;
     }
 
-    public void setSolution(String solutionValue) {
+    public void setSolutionValue(String solutionValue) {
         this.solutionValue = solutionValue;
     }
 }

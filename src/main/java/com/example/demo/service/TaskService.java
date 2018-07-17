@@ -39,7 +39,7 @@ public class TaskService {
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
         try {
-            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolution(), taskTitle); //MatrixSumm как заглушка
+            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
         } catch (Exception e) {
             result = "qwertyuio";
             e.printStackTrace();
