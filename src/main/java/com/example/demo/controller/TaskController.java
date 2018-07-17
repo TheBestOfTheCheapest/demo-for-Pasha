@@ -4,6 +4,8 @@ import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,10 @@ public class TaskController {
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
         log.info("A solution to the task {1} was sent");
-        String result = "{ \"result\" : \"" + taskService.getResult(solution).replace("\n", "\\n") + "\"}";
+        String result = "{ \"result\" : \"" + taskService.getResult(solution)
+                .replace("\n", "\\n")
+                .replace("\t", "\\t")
+                .replace("\r", "\\r") + "\"}";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
