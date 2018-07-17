@@ -27,20 +27,20 @@ public class TaskController {
     @GetMapping()
     public List<TaskEntity> showAllTasks() {
         log.info("Showed all tasks");
-        if(taskService.findAll().isEmpty()) {
+        if (taskService.findAll().isEmpty()) {
             log.info("No tasks");
             throw new NotFoundException();
         }
         return taskService.findAll();
     }
 
-//    @CrossOrigin(origins = "http://localhost:9000")
+    //    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int taskId) {
         log.info("Displayed task {1}", taskId);
         TaskEntity task = taskService.findTaskById(taskId);
-        if (task==null) {
+        if (task == null) {
             log.error("Request to the task with id {1}, which not exist", taskId);
             throw new NotFoundException();
         }
@@ -58,12 +58,12 @@ public class TaskController {
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
         log.info("A solution to the task {1} was sent");
-        String result = "{ \"result\" : \"" + taskService.getResult(solution) + "\"}";
+        String result = "{ \"result\" : \"" + taskService.getResult(solution).replace("\n", "\\n") + "\"}";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/task")
-    public boolean deleteTask(@RequestParam int taskId){
+    public boolean deleteTask(@RequestParam int taskId) {
         log.info("Task {1} was deleted", taskId);
         taskService.deleteTask(taskId);
         return true;
