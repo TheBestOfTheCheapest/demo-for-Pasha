@@ -4,8 +4,6 @@ import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,13 @@ public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
-    @Autowired
+    final
     TaskService taskService;
+
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
 
     @GetMapping()
