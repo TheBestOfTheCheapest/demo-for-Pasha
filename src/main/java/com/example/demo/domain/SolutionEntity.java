@@ -1,17 +1,60 @@
+/*
+ * Developed by Andrey Yelmanov
+ * Copyright (c) 2018.
+ */
+
 package com.example.demo.domain;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "solution")
 public class SolutionEntity {
-    private int taskId;
-    private String solutionId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+
+    @Column(name = "created_date")
+    private LocalDateTime createdTime;
+
+    @Column(name = "value")
     private String solutionValue;
 
+    @Column(name = "test_result")
+    private Boolean testResult;
+
+    @ManyToMany
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
+    @ManyToMany
+    @JoinColumn(name = "task_id")
+    private TaskEntity taskEntity;
+
+
+    /* LEGACY */
+    private int taskId;
+    private String solutionId;
+    /*END LEGACY*/
+
     public SolutionEntity() {
+
     }
 
     public SolutionEntity(int taskId, String solutionId, String solutionValue) {
         this.taskId = taskId;
         this.solutionId = solutionId;
         this.solutionValue = solutionValue;
+    }
+
+    public SolutionEntity(LocalDateTime createdTime, String solutionValue, Boolean testResult) {
+        this.createdTime = createdTime;
+        this.solutionValue = solutionValue;
+        this.testResult = testResult;
     }
 
     public int getTaskId() {
@@ -36,5 +79,57 @@ public class SolutionEntity {
 
     public void setSolutionValue(String solutionValue) {
         this.solutionValue = solutionValue;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Boolean getTestResult() {
+        return testResult;
+    }
+
+    public void setTestResult(Boolean testResult) {
+        this.testResult = testResult;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public TaskEntity getTaskEntity() {
+        return taskEntity;
+    }
+
+    public void setTaskEntity(TaskEntity taskEntity) {
+        this.taskEntity = taskEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "SolutionEntity{" +
+                "id=" + id +
+                ", createdTime=" + createdTime +
+                ", solutionValue='" + solutionValue + '\'' +
+                ", testResult=" + testResult +
+                ", userEntity=" + userEntity +
+                ", taskEntity=" + taskEntity + '\'' +
+                '}';
     }
 }
