@@ -7,6 +7,8 @@ package com.example.demo.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "section")
@@ -34,6 +36,10 @@ public class SectionEntity {
 
     @Column(name = "section_value")
     private String sectionValue;
+
+    @OneToMany(mappedBy = "sectionEntity", cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                                                        CascadeType.PERSIST, CascadeType.REFRESH})
+    private Set<TaskEntity> tasks;
 
     public SectionEntity() {
     }
@@ -109,6 +115,24 @@ public class SectionEntity {
 
     public void setSectionValue(String sectionValue) {
         this.sectionValue = sectionValue;
+    }
+
+    public Set<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<TaskEntity> tasks) {
+        this.tasks = tasks;
+    }
+
+    // add convenience methods for bi-directional relationship
+
+    public void add(TaskEntity task) {
+        if (tasks == null){
+            tasks = new HashSet<>();
+        }
+        tasks.add(task);
+        task.setSectionEntity(this);
     }
 
     @Override

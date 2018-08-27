@@ -35,7 +35,9 @@ public class TaskService {
     }
 
     public String getResult(SolutionEntity solution){
-        String taskTitle = taskRepo.findByTaskId(solution.getTaskId()).getTaskTitle();
+
+
+        String taskTitle = taskRepo.findByTaskId(1/*solution.getId()*/).getTaskTitle();
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
         try {

@@ -7,6 +7,7 @@ package com.example.demo.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "task")
@@ -38,6 +39,10 @@ public class TaskEntity {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private SectionEntity sectionEntity;
+
+    @OneToMany()
+    @JoinColumn(name = "task_id")
+    private List<SolutionEntity> solutions;
 
     public TaskEntity(){
 
@@ -120,6 +125,14 @@ public class TaskEntity {
 
     public void setSectionEntity(SectionEntity sectionEntity) {
         this.sectionEntity = sectionEntity;
+    }
+
+    public List<SolutionEntity> getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(List<SolutionEntity> solutions) {
+        this.solutions = solutions;
     }
 
     @Override
