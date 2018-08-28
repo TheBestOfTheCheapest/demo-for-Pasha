@@ -43,10 +43,10 @@ public class TaskController {
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int taskId) {
-        log.info("Displayed task {1}", taskId);
+        log.info("Displayed task {0}", taskId);
         TaskEntity task = taskService.findTaskById(taskId);
         if (task == null) {
-            log.error("Request to the task with id {1}, which not exist", taskId);
+            log.error("Request to the task with id {0}, which not exist", taskId);
             throw new NotFoundException();
         }
         return new ResponseEntity<>(task, HttpStatus.OK);
@@ -62,7 +62,7 @@ public class TaskController {
 
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
-        log.info("A solution to the task {1} was sent");
+        log.info("A solution to the task {0} was sent", solution.getTask().getTaskId());
         String result = "{ \"result\" : \"" + taskService.getResult(solution)
                 .replace("\n", "\\n")
                 .replace("\t", "\\t")
@@ -72,7 +72,7 @@ public class TaskController {
 
     @DeleteMapping("/task")
     public boolean deleteTask(@RequestParam int taskId) {
-        log.info("Task {1} was deleted", taskId);
+        log.info("Task {0} was deleted", taskId);
         taskService.deleteTask(taskId);
         return true;
     }

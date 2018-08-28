@@ -40,7 +40,7 @@ public class TaskEntity {
     @JoinColumn(name = "section_id")
     private SectionEntity sectionEntity;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<SolutionEntity> solutions;
 

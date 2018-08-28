@@ -7,8 +7,6 @@ package com.example.demo.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "solution")
@@ -29,51 +27,23 @@ public class SolutionEntity {
     @Column(name = "test_result")
     private Boolean testResult;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-//    @ManyToMany
-//    @JoinColumn(name = "task_id")
-//    private List<TaskEntity> tasks = new ArrayList<>();
-
-
-    /* LEGACY */
-//    private int taskId;
-//    private String solutionId;
-    /*END LEGACY*/
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private TaskEntity task;
 
     public SolutionEntity() {
 
     }
-
-//    public SolutionEntity(int taskId, String solutionId, String solutionValue) {
-//        this.taskId = taskId;
-//        this.solutionId = solutionId;
-//        this.solutionValue = solutionValue;
-//    }
 
     public SolutionEntity(LocalDateTime createdTime, String solutionValue, Boolean testResult) {
         this.createdTime = createdTime;
         this.solutionValue = solutionValue;
         this.testResult = testResult;
     }
-
-//    public int getTaskId() {
-//        return taskId;
-//    }
-//
-//    public void setTaskId(int taskId) {
-//        this.taskId = taskId;
-//    }
-//
-//    public String getSolutionId() {
-//        return solutionId;
-//    }
-//
-//    public void setSolutionId(String solutionId) {
-//        this.solutionId = solutionId;
-//    }
 
     public String getSolutionValue() {
         return solutionValue;
@@ -115,14 +85,13 @@ public class SolutionEntity {
         this.user = user;
     }
 
-//    public List<TaskEntity> getTasks() {
-//        return tasks;
-//    }
-//
-//    public void setTasks(List<TaskEntity> tasks) {
-//        this.tasks = tasks;
-//    }
+    public TaskEntity getTask() {
+        return task;
+    }
 
+    public void setTask(TaskEntity task) {
+        this.task = task;
+    }
 
     @Override
     public String toString() {
@@ -132,6 +101,7 @@ public class SolutionEntity {
                 ", solutionValue='" + solutionValue + '\'' +
                 ", testResult=" + testResult +
                 ", user=" + user +
+                ", task=" + task +
                 '}';
     }
 }
