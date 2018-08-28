@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,7 +50,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<SolutionEntity> solutions;
 
@@ -136,6 +137,14 @@ public class UserEntity {
 
     public void setSolutions(List<SolutionEntity> solutions) {
         this.solutions = solutions;
+    }
+
+    public void addSolution(SolutionEntity solution) {
+        if (solutions == null) {
+            solutions = new ArrayList<>();
+        }
+
+        solutions.add(solution);
     }
 
     @Override
