@@ -4,6 +4,8 @@ import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
+import com.example.demo.service.dto.TaskDTO;
+import com.example.demo.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,13 @@ public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
-    final
-    TaskService taskService;
+    final TaskService taskService;
+    final TaskMapper taskMapper;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper) {
         this.taskService = taskService;
+        this.taskMapper = taskMapper;
     }
 
 
@@ -42,23 +45,25 @@ public class TaskController {
     //    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
-    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int taskId) {
+    public ResponseEntity<TaskDTO> showConcreteTask(@RequestParam int taskId) {
         log.info("Displayed task {0}", taskId);
         TaskEntity task = taskService.findTaskById(taskId);
+
+        //TaskEntity task = taskService.findTaskById(taskId);
         if (task == null) {
             log.error("Request to the task with id {0}, which not exist", taskId);
             throw new NotFoundException();
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return new ResponseEntity<>(taskMapper.taskToTaskDTO(task), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
-                                              @RequestParam String sourceSample) {
-        log.info("New task was added");
-        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
-        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
+//                                              @RequestParam String sourceSample) {
+//        log.info("New task was added");
+//        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
+//        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
+//    }
 
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {

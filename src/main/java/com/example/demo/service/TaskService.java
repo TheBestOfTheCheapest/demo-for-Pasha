@@ -9,7 +9,9 @@ import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -25,11 +27,11 @@ public class TaskService {
         return taskRepo.findByTaskId(taskId);
     }
 
-    public TaskEntity add(String taskTitle, String taskText, String sourceSample){
+    public TaskEntity add(TaskDTO taskDTO){
         TaskEntity task = new TaskEntity();
-        task.setTaskTitle(taskTitle);
-        task.setTaskText(taskText);
-        task.setSourceSample(sourceSample);
+        task.setTaskTitle(taskDTO.getTaskTitle());
+        task.setTaskText(taskDTO.getTaskText());
+        task.setSourceSample(taskDTO.getSourceSample());
         taskRepo.save(task);
         return task;
     }
