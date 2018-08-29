@@ -38,12 +38,10 @@ public class TaskEntity {
     @Column(name = "source_template")
     private String sourceTemplate;
 
-    @JsonIgnore //FixME delete this Crutch
     @ManyToOne
     @JoinColumn(name = "section_id")
     private SectionEntity sectionEntity;
 
-    @JsonIgnore //FixME delete this Crutch
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<SolutionEntity> solutions;
@@ -68,7 +66,7 @@ public class TaskEntity {
     }
 
     public Integer getTaskId() {
-        return taskId;
+        return this.taskId;
     }
 
     public void setTaskId(Integer taskId) {
