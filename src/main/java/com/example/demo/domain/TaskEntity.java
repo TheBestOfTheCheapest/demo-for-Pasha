@@ -5,6 +5,8 @@
 
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,10 +38,12 @@ public class TaskEntity {
     @Column(name = "source_template")
     private String sourceTemplate;
 
+    @JsonIgnore //FixME delete this Crutch
     @ManyToOne
     @JoinColumn(name = "section_id")
     private SectionEntity sectionEntity;
 
+    @JsonIgnore //FixME delete this Crutch
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<SolutionEntity> solutions;

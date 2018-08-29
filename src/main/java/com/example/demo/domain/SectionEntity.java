@@ -17,10 +17,10 @@ public class SectionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "parent_id")
-    private int parentId;
+    private Integer parentId;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -52,7 +52,7 @@ public class SectionEntity {
         this.sectionValue = sectionValue;
     }
 
-    public SectionEntity(int parentId, LocalDateTime createdDate, LocalDateTime updatedDate, int sectionLevel, String sectionKey, String sectionValue) {
+    public SectionEntity(Integer parentId, LocalDateTime createdDate, LocalDateTime updatedDate, int sectionLevel, String sectionKey, String sectionValue) {
         this.parentId = parentId;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -61,19 +61,19 @@ public class SectionEntity {
         this.sectionValue = sectionValue;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
