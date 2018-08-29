@@ -9,23 +9,36 @@ import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.dto.TaskDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class TaskMapper {
+public class TaskMapper implements EntityMapper<TaskDTO, TaskEntity> {
 
-    public TaskDTO taskToTaskDTO(TaskEntity task) {
-        return new TaskDTO(task);
-    }
-
-    public TaskEntity taskDTOToTask(TaskDTO taskDTO) {
-        if (taskDTO == null) {
+    @Override
+    public TaskEntity toEntity(TaskDTO dto) {
+        if (dto == null) {
             return null;
         }
         TaskEntity task = new TaskEntity();
-        task.setTaskId(taskDTO.getTaskId());
-        task.setTaskTitle(taskDTO.getTaskTitle());
-        task.setTaskText(taskDTO.getTaskText());
+        task.setTaskId(dto.getTaskId());
+        task.setTaskTitle(dto.getTaskTitle());
+        task.setTaskText(dto.getTaskText());
 
         return task;
+    }
 
+    @Override
+    public TaskDTO toDto(TaskEntity entity) {
+        return new TaskDTO(entity);
+    }
+
+    @Override
+    public List<TaskEntity> toEntity(List<TaskDTO> dtoList) {
+        return null;
+    }
+
+    @Override
+    public List<TaskDTO> toDto(List<TaskEntity> entityList) {
+        return null;
     }
 }

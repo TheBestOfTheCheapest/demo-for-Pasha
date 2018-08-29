@@ -1,3 +1,8 @@
+/*
+ * Developed by Andrey Yelmanov
+ * Copyright (c) 2018.
+ */
+
 package com.example.demo.controller;
 
 import com.example.demo.controller.exceptions.NotFoundException;
@@ -5,6 +10,7 @@ import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.dto.TaskDTO;
+import com.example.demo.service.mapper.EntityMapper;
 import com.example.demo.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +30,13 @@ public class TaskController {
 
     final TaskService taskService;
     final TaskMapper taskMapper;
+    final EntityMapper entityMapper;
 
     @Autowired
-    public TaskController(TaskService taskService, TaskMapper taskMapper) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper, EntityMapper entityMapper) {
         this.taskService = taskService;
         this.taskMapper = taskMapper;
+        this.entityMapper = entityMapper;
     }
 
 
@@ -46,15 +54,14 @@ public class TaskController {
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskDTO> showConcreteTask(@RequestParam int taskId) {
-        log.info("Displayed task {0}", taskId);
         TaskEntity task = taskService.findTaskById(taskId);
-
         //TaskEntity task = taskService.findTaskById(taskId);
         if (task == null) {
-            log.error("Request to the task with id {0}, which not exist", taskId);
+            log.error("Request to the task with id {}, which not exist", taskId);
             throw new NotFoundException();
         }
-        return new ResponseEntity<>(taskMapper.taskToTaskDTO(task), HttpStatus.OK);
+        log.info("Retrieve task with id {}", taskId);
+        return new ResponseEntity<>(taskMapper.toDto(task), HttpStatus.OK);
     }
 
 //    @PostMapping("/add")
@@ -67,7 +74,7 @@ public class TaskController {
 
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
-        log.info("A solution to the task {0} was sent", solution.getTask().getTaskId());
+        log.info("A solution to the task {} was sent", solution.getTask().getTaskId());
         String result = "{ \"result\" : \"" + taskService.getResult(solution)
                 .replace("\n", "\\n")
                 .replace("\t", "\\t")
@@ -77,7 +84,7 @@ public class TaskController {
 
     @DeleteMapping("/task")
     public boolean deleteTask(@RequestParam int taskId) {
-        log.info("Task {0} was deleted", taskId);
+        log.info("Task {} was deleted", taskId);
         taskService.deleteTask(taskId);
         return true;
     }
