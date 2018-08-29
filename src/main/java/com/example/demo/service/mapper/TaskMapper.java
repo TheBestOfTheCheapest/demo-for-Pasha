@@ -10,6 +10,8 @@ import com.example.demo.service.dto.TaskDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskMapper implements EntityMapper<TaskDTO, TaskEntity> {
@@ -34,11 +36,14 @@ public class TaskMapper implements EntityMapper<TaskDTO, TaskEntity> {
 
     @Override
     public List<TaskEntity> toEntity(List<TaskDTO> dtoList) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<TaskDTO> toDto(List<TaskEntity> entityList) {
-        return null;
+        return entityList.stream()
+                .filter(Objects::nonNull)
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

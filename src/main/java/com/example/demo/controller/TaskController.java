@@ -41,13 +41,13 @@ public class TaskController {
 
 
     @GetMapping()
-    public List<TaskEntity> showAllTasks() {
+    public List<TaskDTO> showAllTasks() {
         log.info("Showed all tasks");
         if (taskService.findAll().isEmpty()) {
             log.info("No tasks");
             throw new NotFoundException();
         }
-        return taskService.findAll();
+        return taskMapper.toDto(taskService.findAll());
     }
 
     //    @CrossOrigin(origins = "http://localhost:9000")
