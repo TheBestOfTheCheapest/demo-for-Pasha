@@ -6,6 +6,7 @@
 package com.example.demo.service.mapper;
 
 import com.example.demo.domain.SolutionEntity;
+import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.dto.SolutionDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,9 @@ public class SolutionMapper implements EntityMapper<SolutionDTO, SolutionEntity>
         }
         SolutionEntity solution = new SolutionEntity();
         solution.setId(dto.getId());
+        solution.setTask(new TaskEntity(dto.getTaskId()));
         solution.setSolutionValue(dto.getSolutionValue());
-        //solution.setTestResult(dto.getTestResult());
+        solution.setTestResult(dto.getTestResult());
 
         return solution;
     }

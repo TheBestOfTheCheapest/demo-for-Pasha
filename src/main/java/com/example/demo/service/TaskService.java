@@ -48,10 +48,10 @@ public class TaskService {
 
     public String getResult(SolutionEntity solution){
 
-
         String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
         TaskRunner taskRunner = new TaskRunner();
         String result= "";
+
         try {
             result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
         } catch (Exception e) {
@@ -62,6 +62,9 @@ public class TaskService {
         //todo найти класс шаблона задачи
         //todo передать в TaskRunner код и шаблон
         //todo вернуть результат
+
+        solution.setTestResult(result);
+        solutionRepo.save(solution);
         return result;
     }
 

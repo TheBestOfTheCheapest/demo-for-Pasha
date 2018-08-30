@@ -71,8 +71,9 @@ public class TaskController {
     }
 
     @PostMapping("/solution")
-    public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
-        log.info("A solution to the task {} was sent", solution.getTask().getTaskId());
+    public ResponseEntity<?> getResult(@RequestBody SolutionDTO solutionDto) {
+      //  log.info("A solution to the task {} was sent", solution.getTask().getTaskId());
+        SolutionEntity solution = solutionMapper.toEntity(solutionDto);
         String result = "{ \"result\" : \"" + taskService.getResult(solution)
                 .replace("\n", "\\n")
                 .replace("\t", "\\t")

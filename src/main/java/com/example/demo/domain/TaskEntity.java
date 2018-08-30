@@ -46,8 +46,12 @@ public class TaskEntity {
     @JoinColumn(name = "task_id")
     private List<SolutionEntity> solutions;
 
-    public TaskEntity(){
+    public TaskEntity() {
 
+    }
+
+    public TaskEntity(Integer taskId) {
+        this.taskId = taskId;
     }
 
     public TaskEntity(String taskTitle, String taskText, String sourceSample) {

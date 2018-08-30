@@ -9,6 +9,8 @@ import com.example.demo.domain.SolutionEntity;
 
 public class SolutionDTO {
     private Integer id;
+    private Integer taskId;
+    private Integer userId;
     private String solutionValue;
     private String testResult;
 
@@ -18,11 +20,9 @@ public class SolutionDTO {
     public SolutionDTO(SolutionEntity solution) {
         this.id = solution.getId();
         this.solutionValue = solution.getSolutionValue();
-        if(solution.getTestResult() == true){
-            this.testResult = "SUCCESS";
-        }else{
-            this.testResult = "UNSUCCESS";
-        }
+        this.testResult = solution.getTestResult();
+        this.taskId = solution.getTask().getTaskId();
+        this.userId = solution.getUser().getId();
     }
 
     public Integer getId() {
@@ -31,6 +31,22 @@ public class SolutionDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getSolutionValue() {

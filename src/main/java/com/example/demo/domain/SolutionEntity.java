@@ -24,7 +24,7 @@ public class SolutionEntity {
     private String solutionValue;
 
     @Column(name = "test_result")
-    private Boolean testResult;
+    private String testResult;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,7 +38,7 @@ public class SolutionEntity {
 
     }
 
-    public SolutionEntity(LocalDateTime createdTime, String solutionValue, Boolean testResult) {
+    public SolutionEntity(LocalDateTime createdTime, String solutionValue, String testResult) {
         this.createdTime = createdTime;
         this.solutionValue = solutionValue;
         this.testResult = testResult;
@@ -68,11 +68,11 @@ public class SolutionEntity {
         this.createdTime = createdTime;
     }
 
-    public Boolean getTestResult() {
+    public String getTestResult() {
         return testResult;
     }
 
-    public void setTestResult(Boolean testResult) {
+    public void setTestResult(String testResult) {
         this.testResult = testResult;
     }
 
