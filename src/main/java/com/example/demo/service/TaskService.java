@@ -14,6 +14,7 @@ import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,8 +49,8 @@ public class TaskService {
     public String getResult(SolutionEntity solution) {
 
         //String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
+        solution.setCreatedTime(LocalDateTime.now());
         TaskEntity task = taskRepo.findByTaskId(solution.getTask().getTaskId());
-
         TaskRunner taskRunner = new TaskRunner();
         String result = "";
 
