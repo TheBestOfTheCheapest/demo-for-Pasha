@@ -9,8 +9,9 @@ import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
+import com.example.demo.service.dto.SolutionDTO;
 import com.example.demo.service.dto.TaskDTO;
-import com.example.demo.service.mapper.EntityMapper;
+import com.example.demo.service.mapper.SolutionMapper;
 import com.example.demo.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +31,14 @@ public class TaskController {
 
     final TaskService taskService;
     final TaskMapper taskMapper;
-    final EntityMapper entityMapper;
+    final SolutionMapper solutionMapper;
 
     @Autowired
-    public TaskController(TaskService taskService, TaskMapper taskMapper, EntityMapper entityMapper) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper, SolutionMapper solutionMapper) {
         this.taskService = taskService;
         this.taskMapper = taskMapper;
-        this.entityMapper = entityMapper;
+        this.solutionMapper = solutionMapper;
     }
-
 
     @GetMapping()
     public List<TaskDTO> showAllTasks() {
@@ -50,7 +50,6 @@ public class TaskController {
         return taskMapper.toDto(taskService.findAll());
     }
 
-    //    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
     public ResponseEntity<TaskDTO> showConcreteTask(@RequestParam int taskId) {
@@ -64,13 +63,12 @@ public class TaskController {
         return new ResponseEntity<>(taskMapper.toDto(task), HttpStatus.OK);
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
-//                                              @RequestParam String sourceSample) {
-//        log.info("New task was added");
-//        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
-//        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
-//    }
+    @PostMapping("/add")
+    public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO taskDto) {
+        log.info("New task was added");
+        TaskEntity newTask = taskService.add(taskDto);
+        return new ResponseEntity<>(taskMapper.toDto(newTask), HttpStatus.CREATED);
+    }
 
     @PostMapping("/solution")
     public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {

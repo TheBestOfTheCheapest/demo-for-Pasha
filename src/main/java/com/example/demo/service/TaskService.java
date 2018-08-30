@@ -1,7 +1,13 @@
+/*
+ * Developed by Andrey Yelmanov
+ * Copyright (c) 2018.
+ */
+
 package com.example.demo.service;
 
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
+import com.example.demo.repository.SolutionRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.service.core.Searcher;
 import com.example.demo.service.core.TaskRunner;
@@ -9,15 +15,19 @@ import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
 
+    private final TaskRepository taskRepo;
+    private final SolutionRepository solutionRepo;
+
     @Autowired
-    private TaskRepository taskRepo;
+    public TaskService(TaskRepository taskRepo, SolutionRepository solutionRepo) {
+        this.taskRepo = taskRepo;
+        this.solutionRepo = solutionRepo;
+    }
 
     public List<TaskEntity> findAll(){
         return taskRepo.findAll();

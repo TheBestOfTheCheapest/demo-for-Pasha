@@ -15,8 +15,7 @@ public class SolutionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
-
+    private Integer id;
 
     @Column(name = "created_date")
     private LocalDateTime createdTime;
@@ -53,11 +52,11 @@ public class SolutionEntity {
         this.solutionValue = solutionValue;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
