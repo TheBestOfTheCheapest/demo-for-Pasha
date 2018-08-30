@@ -9,7 +9,6 @@ import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.SolutionRepository;
 import com.example.demo.repository.TaskRepository;
-import com.example.demo.service.core.Searcher;
 import com.example.demo.service.core.TaskRunner;
 import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +28,15 @@ public class TaskService {
         this.solutionRepo = solutionRepo;
     }
 
-    public List<TaskEntity> findAll(){
+    public List<TaskEntity> findAll() {
         return taskRepo.findAll();
     }
 
-    public TaskEntity findTaskById(int taskId){
+    public TaskEntity findTaskById(int taskId) {
         return taskRepo.findByTaskId(taskId);
     }
 
-    public TaskEntity add(TaskDTO taskDTO){
+    public TaskEntity add(TaskDTO taskDTO) {
         TaskEntity task = new TaskEntity();
         task.setTaskTitle(taskDTO.getTaskTitle());
         task.setTaskText(taskDTO.getTaskText());
@@ -46,16 +45,19 @@ public class TaskService {
         return task;
     }
 
-    public String getResult(SolutionEntity solution){
+    public String getResult(SolutionEntity solution) {
 
-        String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
+        //String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
+        TaskEntity task = taskRepo.findByTaskId(solution.getTask().getTaskId());
+
         TaskRunner taskRunner = new TaskRunner();
-        String result= "";
+        String result = "";
 
         try {
-            result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
+          //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
+            result = taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle());
         } catch (Exception e) {
-            result = "qwertyuio";
+           // result = "qwertyuio";
             e.printStackTrace();
         }
         //todo найти и прочитать файл по задаче
