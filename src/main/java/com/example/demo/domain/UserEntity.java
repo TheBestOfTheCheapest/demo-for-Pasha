@@ -19,7 +19,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
 
     @Column(name = "created_date")
@@ -30,21 +30,21 @@ public class UserEntity {
 
     @Column(name = "first_name")
     @NotNull
-    @Max(value = 64)
+   // @Max(value = 64)
     private String firstName;
 
     @Column(name = "middle_name")
-    @Max(value = 64)
+    //@Max(value = 64)
     private String middleName;
 
     @Column(name = "last_name")
     @NotNull
-    @Max(value = 64)
+   // @Max(value = 64)
     private String lastName;
 
     @Column(name = "email")
     @NotNull
-    @Max(value = 64)
+   // @Max(value = 64)
     private String email;
 
     @Column(name = "password")
@@ -67,11 +67,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

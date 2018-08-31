@@ -13,8 +13,9 @@ import java.util.List;
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    List<UserEntity> findBy();
+    List<UserEntity> findAll();
     UserEntity findByEmail(String email);
     UserEntity findById(long id);
+    Boolean existsByEmail(String email);
 
 }
