@@ -45,7 +45,7 @@ CREATE TABLE solution
     task_id int,
     created_date timestamp,
     value varchar(32768),
-    test_result boolean,
+    test_result varchar(2048),
     CONSTRAINT solution_users_id_fk FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT solution_tasks_id_fk FOREIGN KEY (task_id) REFERENCES task (id)
 )
