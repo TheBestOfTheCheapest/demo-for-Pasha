@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = {"http://localhost:9000", "http://192.168.238.107:9000"})
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
