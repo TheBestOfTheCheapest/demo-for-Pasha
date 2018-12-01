@@ -1,9 +1,18 @@
+/*
+ * Developed by Andrey Yelmanov
+ * Copyright (c) 2018.
+ */
+
 package com.example.demo.controller;
 
 import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
+import com.example.demo.service.dto.SolutionDTO;
+import com.example.demo.service.dto.TaskDTO;
+import com.example.demo.service.mapper.SolutionMapper;
+import com.example.demo.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,49 +29,51 @@ public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
-    final
-    TaskService taskService;
+    final TaskService taskService;
+    final TaskMapper taskMapper;
+    final SolutionMapper solutionMapper;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper, SolutionMapper solutionMapper) {
         this.taskService = taskService;
+        this.taskMapper = taskMapper;
+        this.solutionMapper = solutionMapper;
     }
 
-
     @GetMapping()
-    public List<TaskEntity> showAllTasks() {
+    public List<TaskDTO> showAllTasks() {
         log.info("Showed all tasks");
         if (taskService.findAll().isEmpty()) {
             log.info("No tasks");
             throw new NotFoundException();
         }
-        return taskService.findAll();
+        return taskMapper.toDto(taskService.findAll());
     }
 
-    //    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/task")
     @ResponseBody
-    public ResponseEntity<TaskEntity> showConcreteTask(@RequestParam int taskId) {
-        log.info("Displayed task {1}", taskId);
+    public ResponseEntity<TaskDTO> showConcreteTask(@RequestParam int taskId) {
         TaskEntity task = taskService.findTaskById(taskId);
+        //TaskEntity task = taskService.findTaskById(taskId);
         if (task == null) {
-            log.error("Request to the task with id {1}, which not exist", taskId);
+            log.error("Request to the task with id {}, which not exist", taskId);
             throw new NotFoundException();
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        log.info("Retrieve task with id {}", taskId);
+        return new ResponseEntity<>(taskMapper.toDto(task), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TaskEntity> addTask(@RequestParam String taskTitle, @RequestParam String taskText,
-                                              @RequestParam String sourceSample) {
+    public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO taskDto) {
         log.info("New task was added");
-        TaskEntity newTask = taskService.add(taskTitle, taskText, sourceSample);
-        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
+        TaskEntity newTask = taskService.add(taskDto);
+        return new ResponseEntity<>(taskMapper.toDto(newTask), HttpStatus.CREATED);
     }
 
     @PostMapping("/solution")
-    public ResponseEntity<?> getResult(@RequestBody SolutionEntity solution) {
-        log.info("A solution to the task {1} was sent");
+    public ResponseEntity<?> getResult(@RequestBody SolutionDTO solutionDto) {
+      //  log.info("A solution to the task {} was sent", solution.getTask().getTaskId());
+        SolutionEntity solution = solutionMapper.toEntity(solutionDto);
         String result = "{ \"result\" : \"" + taskService.getResult(solution)
                 .replace("\n", "\\n")
                 .replace("\t", "\\t")
@@ -72,7 +83,7 @@ public class TaskController {
 
     @DeleteMapping("/task")
     public boolean deleteTask(@RequestParam int taskId) {
-        log.info("Task {1} was deleted", taskId);
+        log.info("Task {} was deleted", taskId);
         taskService.deleteTask(taskId);
         return true;
     }

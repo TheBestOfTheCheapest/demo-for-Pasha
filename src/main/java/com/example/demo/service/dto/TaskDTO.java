@@ -19,7 +19,6 @@ public class TaskDTO {
         this.sourceSample = task.getSourceSample();
     }
 
-
     public Integer getTaskId() {
         return taskId;
     }
