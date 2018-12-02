@@ -10,6 +10,7 @@ import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.SolutionRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.service.core.TaskRunner;
+import com.example.demo.service.dto.ResultDTO;
 import com.example.demo.service.dto.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,27 +47,24 @@ public class TaskService {
         return task;
     }
 
-    public String getResult(SolutionEntity solution) {
+    public ResultDTO getResult(SolutionEntity solution) {
 
         //String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
         solution.setCreatedTime(LocalDateTime.now());
         TaskEntity task = taskRepo.findByTaskId(solution.getTask().getTaskId());
         TaskRunner taskRunner = new TaskRunner();
-        String result = "";
+        ResultDTO result = new ResultDTO();
+        String result1 = "";
 
         try {
           //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
-            result = taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle());
+            result.setResult(taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle()));
         } catch (Exception e) {
            // result = "qwertyuio";
             e.printStackTrace();
         }
-        //todo найти и прочитать файл по задаче
-        //todo найти класс шаблона задачи
-        //todo передать в TaskRunner код и шаблон
-        //todo вернуть результат
 
-        solution.setTestResult(result);
+        solution.setTestResult(result.getResult());
         solutionRepo.save(solution);
         return result;
     }
