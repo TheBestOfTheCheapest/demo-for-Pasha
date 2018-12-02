@@ -9,6 +9,7 @@ import com.example.demo.controller.exceptions.NotFoundException;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.service.TaskService;
+import com.example.demo.service.dto.ResultDTO;
 import com.example.demo.service.dto.SolutionDTO;
 import com.example.demo.service.dto.TaskDTO;
 import com.example.demo.service.mapper.SolutionMapper;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = {"http://localhost:9000", "http://192.168.238.107:9000"})
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
@@ -71,13 +72,11 @@ public class TaskController {
     }
 
     @PostMapping("/solution")
-    public ResponseEntity<?> getResult(@RequestBody SolutionDTO solutionDto) {
-      //  log.info("A solution to the task {} was sent", solution.getTask().getTaskId());
+    public ResponseEntity<ResultDTO> getResult(@RequestBody SolutionDTO solutionDto) {
+        log.info("A solution to the task {} was sent", solutionDto.getTaskId());
         SolutionEntity solution = solutionMapper.toEntity(solutionDto);
-        String result = "{ \"result\" : \"" + taskService.getResult(solution)
-                .replace("\n", "\\n")
-                .replace("\t", "\\t")
-                .replace("\r", "\\r") + "\"}";
+        ResultDTO result = taskService.getResult(solution);
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
