@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class TaskService {
@@ -41,9 +43,17 @@ public class TaskService {
         return tasks;
     }
 
-    public TasksDTO randomTasks(Integer number){
-
-        return new TasksDTO();
+    public TasksDTO randomTasks(Integer number) throws Exception {
+        if(number > taskRepo.count()){
+            throw new Exception("Too many tasks in Request");
+        }
+        TasksDTO tasks = new TasksDTO();
+        List<TaskDTO> tasksList = new ArrayList<>();
+        for(int i=0;i<number;i++){
+           tasksList.add(taskMapper.toDto(taskRepo.findByTaskId((int) (Math.random() * taskRepo.count() + 1))));
+        }
+        tasks.setTasks(tasksList);
+        return tasks;
     }
 
     public TaskEntity findTaskById(int taskId) {
@@ -69,10 +79,10 @@ public class TaskService {
         String result1 = "";
 
         try {
-          //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
+            //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
             result.setResult(taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle()));
         } catch (Exception e) {
-           // result = "qwertyuio";
+            // result = "qwertyuio";
             e.printStackTrace();
         }
 

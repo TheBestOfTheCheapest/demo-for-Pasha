@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @GetMapping()
-    public ResponseEntity<TasksDTO> showAllTasks(Integer number) {
+    public ResponseEntity<TasksDTO> showAllTasks(Integer number) throws Exception {
         log.info("Showed all tasks");
         if (taskService.findAll().getTasks().isEmpty()) {
             log.info("No tasks");
