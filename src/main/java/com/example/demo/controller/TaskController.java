@@ -25,7 +25,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:9000", "http://192.168.238.107:9000"})
 @RestController
-@RequestMapping("tasks")
+@RequestMapping("api/tasks")
 public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
