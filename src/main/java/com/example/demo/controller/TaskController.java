@@ -41,13 +41,16 @@ public class TaskController {
     }
 
     @GetMapping()
-    public ResponseEntity<TasksDTO> showAllTasks() {
+    public ResponseEntity<TasksDTO> showAllTasks(Integer number) {
         log.info("Showed all tasks");
         if (taskService.findAll().getTasks().isEmpty()) {
             log.info("No tasks");
             throw new NotFoundException();
         }
-        return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
+        if(number == null)
+            return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(taskService.randomTasks(number), HttpStatus.OK);
     }
 
     @GetMapping("/task")

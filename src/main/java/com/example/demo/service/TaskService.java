@@ -41,6 +41,11 @@ public class TaskService {
         return tasks;
     }
 
+    public TasksDTO randomTasks(Integer number){
+
+        return new TasksDTO();
+    }
+
     public TaskEntity findTaskById(int taskId) {
         return taskRepo.findByTaskId(taskId);
     }
