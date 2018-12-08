@@ -12,6 +12,8 @@ import com.example.demo.repository.TaskRepository;
 import com.example.demo.service.core.TaskRunner;
 import com.example.demo.service.dto.ResultDTO;
 import com.example.demo.service.dto.TaskDTO;
+import com.example.demo.service.dto.TasksDTO;
+import com.example.demo.service.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +25,20 @@ public class TaskService {
 
     private final TaskRepository taskRepo;
     private final SolutionRepository solutionRepo;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepo, SolutionRepository solutionRepo) {
+    public TaskService(TaskRepository taskRepo, SolutionRepository solutionRepo, TaskMapper taskMapper) {
         this.taskRepo = taskRepo;
         this.solutionRepo = solutionRepo;
+        this.taskMapper = taskMapper;
     }
 
-    public List<TaskEntity> findAll() {
-        return taskRepo.findAll();
+    public TasksDTO findAll() {
+        TasksDTO tasks = new TasksDTO();
+        List<TaskEntity> tasksList = taskRepo.findAll();
+        tasks.setTasks(taskMapper.toDto(tasksList));
+        return tasks;
     }
 
     public TaskEntity findTaskById(int taskId) {
