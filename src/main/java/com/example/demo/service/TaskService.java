@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -44,13 +45,16 @@ public class TaskService {
     }
 
     public TasksDTO randomTasks(Integer number) throws Exception {
-        if(number > taskRepo.count()){
+        if (number > taskRepo.count()) {
             throw new Exception("Too many tasks in Request");
         }
         TasksDTO tasks = new TasksDTO();
         List<TaskDTO> tasksList = new ArrayList<>();
-        for(int i=0;i<number;i++){
-           tasksList.add(taskMapper.toDto(taskRepo.findByTaskId((int) (Math.random() * taskRepo.count() + 1))));
+
+        Random rand = new Random();
+
+        for (int i = 0; i < number; i++) {
+            tasksList.add(taskMapper.toDto(taskRepo.findByTaskId(1 + rand.nextInt((int) taskRepo.count()))));
         }
         tasks.setTasks(tasksList);
         return tasks;
@@ -93,5 +97,14 @@ public class TaskService {
 
     public void deleteTask(int taskId) {
         taskRepo.delete(findTaskById(taskId));
+    }
+
+    private boolean isExist(int[] array, int value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }
