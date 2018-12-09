@@ -56,6 +56,7 @@ public class TaskService {
         for (int i = 0; i < number; i++) {
             tasksList.add(taskMapper.toDto(taskRepo.findByTaskId(1 + rand.nextInt((int) taskRepo.count()))));
         }
+
         tasks.setTasks(tasksList);
         return tasks;
     }
@@ -97,14 +98,5 @@ public class TaskService {
 
     public void deleteTask(int taskId) {
         taskRepo.delete(findTaskById(taskId));
-    }
-
-    private boolean isExist(int[] array, int value) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == value) {
-                return true;
-            }
-        }
-        return false;
     }
 }
