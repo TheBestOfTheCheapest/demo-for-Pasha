@@ -19,9 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -51,12 +50,11 @@ public class TaskService {
         TasksDTO tasks = new TasksDTO();
         List<TaskDTO> tasksList = new ArrayList<>();
 
-        Random rand = new Random();
-
+        List<TaskEntity> tasksListE = taskRepo.findAll();
+        Collections.shuffle(tasksListE);
         for (int i = 0; i < number; i++) {
-            tasksList.add(taskMapper.toDto(taskRepo.findByTaskId(1 + rand.nextInt((int) taskRepo.count()))));
+            tasksList.add(taskMapper.toDto(tasksListE).get(i));
         }
-
         tasks.setTasks(tasksList);
         return tasks;
     }
