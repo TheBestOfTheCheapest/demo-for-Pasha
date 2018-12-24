@@ -16,7 +16,7 @@ spring.jpa.hibernate.ddl-auto=validate
 
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 ```
-* в luncher в раздел *Enviroment* в строку *Program arguments* установить значение *--spring.properties.active=dev*
+* в luncher в раздел *Enviroment* в строку *Program arguments* установить значение *--spring.profiles.active=dev*
 * запустить проект
 
 Во время запуска flywaydb автоматически создаст все необходимые таблицы в БД и заполнит их данными

@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,6 +40,22 @@ public class TaskService {
         TasksDTO tasks = new TasksDTO();
         List<TaskEntity> tasksList = taskRepo.findAll();
         tasks.setTasks(taskMapper.toDto(tasksList));
+        return tasks;
+    }
+
+    public TasksDTO randomTasks(Integer number) throws Exception {
+        if (number > taskRepo.count()) {
+            throw new Exception("Too many tasks in Request");
+        }
+        TasksDTO tasks = new TasksDTO();
+        List<TaskDTO> tasksList = new ArrayList<>();
+
+        List<TaskEntity> tasksListE = taskRepo.findAll();
+        Collections.shuffle(tasksListE);
+        for (int i = 0; i < number; i++) {
+            tasksList.add(taskMapper.toDto(tasksListE).get(i));
+        }
+        tasks.setTasks(tasksList);
         return tasks;
     }
 
@@ -64,10 +82,10 @@ public class TaskService {
         String result1 = "";
 
         try {
-          //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
+            //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
             result.setResult(taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle()));
         } catch (Exception e) {
-           // result = "qwertyuio";
+            // result = "qwertyuio";
             e.printStackTrace();
         }
 
