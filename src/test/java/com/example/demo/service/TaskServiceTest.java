@@ -33,11 +33,6 @@ public class TaskServiceTest {
     @MockBean
     private TaskRepository taskRepo;
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     @Test
     public void add() {
         TaskDTO task = new TaskDTO();
