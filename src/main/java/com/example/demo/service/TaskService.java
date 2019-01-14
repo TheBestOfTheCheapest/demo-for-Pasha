@@ -1,6 +1,6 @@
 /*
  * Developed by Andrey Yelmanov
- * Copyright (c) 2018.
+ * Copyright (c) 2019.
  */
 
 package com.example.demo.service;
@@ -9,6 +9,7 @@ import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
 import com.example.demo.repository.SolutionRepository;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.core.SqlResolver;
 import com.example.demo.service.core.TaskRunner;
 import com.example.demo.service.dto.ResultDTO;
 import com.example.demo.service.dto.TaskDTO;
@@ -17,6 +18,7 @@ import com.example.demo.service.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,22 +75,26 @@ public class TaskService {
     }
 
     public ResultDTO getResult(SolutionEntity solution) {
-
-        //String taskTitle = taskRepo.findByTaskId(solution.getTask().getTaskId()).getTaskTitle();
         solution.setCreatedTime(LocalDateTime.now());
         TaskEntity task = taskRepo.findByTaskId(solution.getTask().getTaskId());
-        TaskRunner taskRunner = new TaskRunner();
         ResultDTO result = new ResultDTO();
-        String result1 = "";
+        if (task.getSectionEntity().getId() == 1) {
+            TaskRunner taskRunner = new TaskRunner();
 
-        try {
-            //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
-            result.setResult(taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle()));
-        } catch (Exception e) {
-            // result = "qwertyuio";
-            e.printStackTrace();
+            try {
+                //  result = taskRunner.run(Searcher.getSource("MatrixSumm"), solution.getSolutionValue(), taskTitle); //MatrixSumm как заглушка
+                result.setResult(taskRunner.run(task.getSourceTemplate(), solution.getSolutionValue(), task.getTaskTitle()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                SqlResolver sr = new SqlResolver();
+                result.setResult(sr.executeSql(solution.getSolutionValue()).toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
         solution.setTestResult(result.getResult());
         solutionRepo.save(solution);
         return result;
