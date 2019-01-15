@@ -1,6 +1,6 @@
 /*
  * Developed by Andrey Yelmanov
- * Copyright (c) 2018.
+ * Copyright (c) 2019.
  */
 
 package com.example.demo.domain;
@@ -58,6 +58,10 @@ public class UserEntity {
     private List<SolutionEntity> solutions;
 
     public UserEntity() {
+    }
+
+    public UserEntity(Integer id) {
+        this.id = id;
     }
 
     public UserEntity(LocalDateTime createdDate, LocalDateTime updatedDate, @NotNull @Max(value = 64) String firstName, @Max(value = 64) String middleName, @NotNull @Max(value = 64) String lastName, @NotNull @Max(value = 64) String email, String password) {

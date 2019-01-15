@@ -1,12 +1,13 @@
 /*
  * Developed by Andrey Yelmanov
- * Copyright (c) 2018.
+ * Copyright (c) 2019.
  */
 
 package com.example.demo.service.mapper;
 
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
+import com.example.demo.domain.UserEntity;
 import com.example.demo.service.dto.SolutionDTO;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class SolutionMapper implements EntityMapper<SolutionDTO, SolutionEntity>
         solution.setTask(new TaskEntity(dto.getTaskId()));
         solution.setSolutionValue(dto.getSolutionValue());
         solution.setTestResult(dto.getTestResult());
+        solution.setUser(new UserEntity(dto.getUserId()));
 
         return solution;
     }

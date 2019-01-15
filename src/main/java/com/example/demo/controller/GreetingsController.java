@@ -29,8 +29,9 @@ public class GreetingsController {
     private final TaskService taskService;
     private final UserMapper userMapper;
     private final SolutionMapper solutionMapper;
-    Integer userId;
-    Integer taskId=1;
+
+    private Integer userId;
+    private Integer taskId=4;
 
     @Autowired
     public GreetingsController(UserService userService, TaskService taskService, UserMapper userMapper, SolutionMapper solutionMapper) {
@@ -52,7 +53,8 @@ public class GreetingsController {
     public String solution(@Valid SolutionDTO solution,  Model model) {
         model.addAttribute("task", taskService.findTaskById(taskId));
         model.addAttribute("solutionValue", solution);
-        solution.setTaskId(1);
+        solution.setUserId(userId);
+        solution.setTaskId(taskId);
         ResultDTO result = taskService.getResult(solutionMapper.toEntity(solution));
 
 
