@@ -42,6 +42,10 @@ public class SqlResolver implements InitializingBean {
         return jdbcTemplate.queryForList(sql);
     }
 
+    public List showAvalibleTables(){
+        return jdbcTemplate.queryForList("SHOW TABLES");
+    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {

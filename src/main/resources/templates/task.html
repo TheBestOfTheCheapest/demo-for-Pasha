@@ -1,0 +1,22 @@
+<!--
+  ~ Developed by Andrey Yelmanov
+  ~ Copyright (c) 2019.
+  -->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2 th:text="${task.taskTitle}"></h2>
+<p th:text="${task.taskText}"></p>
+<!-- -->
+<form action="#" th:action="@{task}" th:object="${solutionDTO}" method="post">
+    <textarea th:text="${task.sourceSample}" th:field="*{solutionValue}"></textarea>
+    <input type="submit"/>
+</form>
+    <textarea th:text="${result}"></textarea>
+</body>
+</html>

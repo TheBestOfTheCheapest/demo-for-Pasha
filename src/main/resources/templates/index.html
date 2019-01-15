@@ -1,0 +1,24 @@
+<!--
+  ~ Developed by Andrey Yelmanov
+  ~ Copyright (c) 2019.
+  -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Hello, input your first name, last name and email to continue</p>
+<form action="task" th:action="@{/auth}" th:object="${userDTO}" method="post">
+
+    <input type="text" id="lastname" th:field="*{lastName}" placeholder="Last Name"/>
+    <input type="text" id="firstname" th:field="*{firstName}" placeholder="First Name"/>
+    <input type="text" id="middlename"th:field="*{middleName}" placeholder="Middle Name"/>
+    <input type="email" id="email" th:field="*{email}" placeholder="Email"/>
+    <input type="submit" value="Authorize">
+</form>
+
+</body>
+</html>
