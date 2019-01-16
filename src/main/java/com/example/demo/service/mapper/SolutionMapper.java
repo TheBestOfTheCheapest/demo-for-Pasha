@@ -25,7 +25,8 @@ public class SolutionMapper implements EntityMapper<SolutionDTO, SolutionEntity>
         solution.setTask(new TaskEntity(dto.getTaskId()));
         solution.setSolutionValue(dto.getSolutionValue());
         solution.setTestResult(dto.getTestResult());
-        solution.setUser(new UserEntity(dto.getUserId()));
+        if (dto.getUserId() != null)
+            solution.setUser(new UserEntity(dto.getUserId()));
 
         return solution;
     }

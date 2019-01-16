@@ -5,18 +5,30 @@
 
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="~{header :: headerFragment}">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h2 th:text="${task.taskTitle}"></h2>
-<p th:text="${task.taskText}"></p>
-<!-- -->
-<form action="#" th:action="@{task}" th:object="${solutionDTO}" method="post">
-    <textarea th:text="${task.sourceSample}" th:field="*{solutionValue}"></textarea>
-    <input type="submit"/>
-</form>
-    <textarea th:text="${result}"></textarea>
+<div class="container-fluid">
+
+    <h3 th:text="${task.taskTitle}"></h3>
+    <p class="lead" th:text="${task.taskText}"></p>
+
+    <!-- -->
+    <form action="#" th:action="@{task}" th:object="${solutionDTO}" method="post">
+        <div class="form-group">
+            <textarea class="form-control" rows="8" th:text="${task.sourceSample}"
+                      th:field="*{solutionValue}"></textarea>
+        </div>
+        <input class="btn btn-primary" type="submit"/>
+    </form>
+    <p></p>
+
+    <textarea class="form-control" rows="8" th:text="${result}"></textarea>
+
+</div>
+<footer th:insert="~{footer :: footerFragment}"></footer>
+</body>
 </body>
 </html>
