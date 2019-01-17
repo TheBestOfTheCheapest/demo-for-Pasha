@@ -1,0 +1,25 @@
+<!--
+  ~ Developed by Andrey Yelmanov
+  ~ Copyright (c) 2019.
+  -->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{header :: headerFragment}">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<ul class="list-unstyled">
+    <li>
+        <ul th:each="task : ${tasks}">
+            <li><a th:href="@{'/task/' +  ${task.taskId}}" th:text="${task.taskTitle}"></a> </li>
+        </ul>
+    </li>
+
+</ul>
+
+<footer th:insert="~{footer :: footerFragment}"></footer>
+</body>
+</html>

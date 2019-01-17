@@ -9,9 +9,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.dto.ResultDTO;
-import com.example.demo.service.dto.SolutionDTO;
-import com.example.demo.service.dto.UserDTO;
+import com.example.demo.service.dto.*;
 import com.example.demo.service.mapper.SolutionMapper;
 import com.example.demo.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class GreetingsController {
@@ -31,7 +30,7 @@ public class GreetingsController {
     private final SolutionMapper solutionMapper;
 
     private Integer userId;
-    private Integer taskId=4;
+    private Integer taskId;
 
     @Autowired
     public GreetingsController(UserService userService, TaskService taskService, UserMapper userMapper, SolutionMapper solutionMapper) {
@@ -42,15 +41,16 @@ public class GreetingsController {
         this.solutionMapper = solutionMapper;
     }
 
-    @GetMapping("/task")
-    public String task(Integer userId, SolutionDTO solution, Model model) {
-        model.addAttribute("task", taskService.findTaskById(taskId));
+    @GetMapping("/task/{taskId}")
+    public String task(@PathVariable String taskId, Integer userId, SolutionDTO solution, Model model) {
+        this.taskId = Integer.valueOf(taskId);
+        model.addAttribute("task", taskService.findTaskById(Integer.valueOf(taskId)));
 
         return "task";
     }
 
-    @PostMapping("/task")
-    public String solution(@Valid SolutionDTO solution,  Model model) {
+    @PostMapping("/task/{taskId}")
+    public String solution(@PathVariable Integer taskId, @Valid SolutionDTO solution,  Model model) {
         model.addAttribute("task", taskService.findTaskById(taskId));
         model.addAttribute("solutionValue", solution);
         solution.setUserId(userId);
@@ -79,7 +79,18 @@ public class GreetingsController {
         model.addAttribute("user", user);
         model.addAttribute("userId", userId);
 
-        return "redirect:/task";
+        return "redirect:/tasks";
 
+    }
+
+    @GetMapping("/tasks")
+    public String taskList(Model model){
+        if(userId == null){
+            return "403";
+        }
+        TasksDTO tasksDTO = taskService.findAll();
+        List<TaskDTO> tasks = tasksDTO.getTasks();
+        model.addAttribute("tasks", tasks);
+        return "tasklist";
     }
 }

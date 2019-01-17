@@ -16,7 +16,7 @@
     <p class="lead" th:text="${task.taskText}"></p>
 
     <!-- -->
-    <form action="#" th:action="@{task}" th:object="${solutionDTO}" method="post">
+    <form action="#" th:action="@{'/task/' + ${task.taskId}}" th:object="${solutionDTO}" method="post">
         <div class="form-group">
             <textarea class="form-control" rows="8" th:text="${task.sourceSample}"
                       th:field="*{solutionValue}"></textarea>
@@ -29,6 +29,5 @@
 
 </div>
 <footer th:insert="~{footer :: footerFragment}"></footer>
-</body>
 </body>
 </html>
