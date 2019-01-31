@@ -25,7 +25,20 @@
     </form>
     <p></p>
 
-    <textarea class="form-control" rows="8" th:text="${result}"></textarea>
+    <!--<textarea class="form-control" rows="8" th:text="${result}"></textarea>-->
+    <table class="table">
+        <thead></thead>
+        <tr th:each="tab: ${table}">
+            <th scope="col" th:text="${tab.key}"></th>
+            <!--<td th:text="${tab.value}"></td>-->
+        </tr>
+    </table>
+    <tbody>
+        <tr th:each="raw: ${raws}">
+            <td th:text="${raw.value}"></td>
+        </tr>
+    </tbody>
+    </table>
 
 </div>
 <footer th:insert="~{footer :: footerFragment}"></footer>

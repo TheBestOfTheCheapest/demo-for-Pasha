@@ -1,8 +1,14 @@
+/*
+ * Developed by Andrey Yelmanov
+ * Copyright (c) 2019.
+ */
+
 package com.example.demo.service.core;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
@@ -14,8 +20,9 @@ public class TaskRunner {
     private ByteArrayOutputStream trace = new ByteArrayOutputStream(2048);
     public String run(String sourceTemplate, String source, String taskName) throws Exception {
 
-        File root = new File(System.getProperty("user.dir")); // On Windows running on C:\, this is C:\java.
-        File sourceFile = new File(root.getPath(), taskName + ".java");
+        String dir = System.getProperty("user.dir");// +"/xxx";
+        File root = new File(dir); // On Windows running on C:\, this is C:\java.
+        File sourceFile = new File(root.getPath() /*dir*/, taskName + ".java");
         try {
             // Prepare source somehow.
             source = sourceTemplate.replace("//REPLACE", source);
@@ -26,6 +33,13 @@ public class TaskRunner {
             // Compile source file.
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             compiler.run(null, null, trace, sourceFile.getPath());
+
+
+
+            String result = sourceFile.toURI().toString();
+            int index=result.lastIndexOf('/');
+            result = result.substring(0,index);
+
 
             // Load and instantiate compiled class.
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{root.toURI().toURL()});

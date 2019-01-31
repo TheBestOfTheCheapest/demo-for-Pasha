@@ -1,6 +1,6 @@
 /*
  * Developed by Andrey Yelmanov
- * Copyright (c) 2018.
+ * Copyright (c) 2019.
  */
 
 package com.example.demo.repository;
@@ -15,7 +15,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     List<UserEntity> findAll();
     UserEntity findByEmail(String email);
-    UserEntity findById(long id);
+    UserEntity findById(int id);
     Boolean existsByEmail(String email);
 
 }

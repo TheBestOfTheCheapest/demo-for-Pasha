@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mvn clean package
+mvn clean package -Dmaven.test.skip=true
 
 echo 'Copy files...'
 

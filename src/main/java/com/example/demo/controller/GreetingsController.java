@@ -19,7 +19,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class GreetingsController {
@@ -50,7 +52,7 @@ public class GreetingsController {
     }
 
     @PostMapping("/task/{taskId}")
-    public String solution(@PathVariable Integer taskId, @Valid SolutionDTO solution,  Model model) {
+    public String solution(@PathVariable Integer taskId, @Valid SolutionDTO solution, Model model) {
         model.addAttribute("task", taskService.findTaskById(taskId));
         model.addAttribute("solutionValue", solution);
         solution.setUserId(userId);
@@ -58,7 +60,18 @@ public class GreetingsController {
         ResultDTO result = taskService.getResult(solutionMapper.toEntity(solution));
 
 
-       model.addAttribute("result", result.getResult());
+        Map<String, List<String>> mappa = new HashMap<>();
+
+        TableMapper tm = new TableMapper();
+        mappa = tm.mapper(result.getResult());
+        List<String> val = new ArrayList<>();
+        for(String key : mappa.keySet()){
+            val=mappa.get(key);
+
+        }
+        model.addAttribute("table", mappa);
+        model.addAttribute("raws", val);
+        model.addAttribute("result", result.getResult());
         return "task";
     }
 
@@ -84,13 +97,60 @@ public class GreetingsController {
     }
 
     @GetMapping("/tasks")
-    public String taskList(Model model){
-        if(userId == null){
+    public String taskList(Model model) {
+        if (userId == null) {
             return "403";
         }
         TasksDTO tasksDTO = taskService.findAll();
         List<TaskDTO> tasks = tasksDTO.getTasks();
         model.addAttribute("tasks", tasks);
         return "tasklist";
+    }
+
+    class TableMapper {
+        Map<String, List<String>> table= new HashMap<>();
+        Set<String> headers;
+
+
+        public Map<String, List<String>> mapper(String input) {
+            Pattern pattern = Pattern.compile(".+?(?=})");
+            Matcher matcher = pattern.matcher(input);
+            String firstLine = "";
+            if (matcher.find()) {
+                firstLine = matcher.group();
+            }
+            firstLine = firstLine.replace("[{", "");
+            firstLine = " " + firstLine;
+            firstLine += ",";
+            // pattern = Pattern.compile("(.+?(?==))(.+?(?=,))");
+            pattern = Pattern.compile(" (.*?)=");
+            matcher = pattern.matcher(firstLine);
+
+            Set<String> headers = new HashSet<>();
+
+            while (matcher.find()) {
+                headers.add(matcher.group().replace("=", "").replace(" ", ""));
+            }
+
+            List<String> values;
+
+            input +=",";
+            for (Iterator<String> it = headers.iterator(); it.hasNext(); ) {
+
+                String st = it.next()+"";
+                pattern = Pattern.compile(st + "=(.*?),");
+
+                matcher = pattern.matcher(input);
+                values = new ArrayList<>();
+                while (matcher.find()) {
+
+                    values.add(matcher.group().replace(st+"=", "").replace("}", ""));
+                }
+
+                table.put(st, values);
+            }
+
+            return table;
+        }
     }
 }

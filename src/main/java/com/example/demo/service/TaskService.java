@@ -7,8 +7,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.SolutionEntity;
 import com.example.demo.domain.TaskEntity;
+import com.example.demo.domain.UserEntity;
 import com.example.demo.repository.SolutionRepository;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.core.SqlResolver;
 import com.example.demo.service.core.TaskRunner;
 import com.example.demo.service.dto.ResultDTO;
@@ -28,12 +30,14 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepo;
+    private final UserRepository userRepository;
     private final SolutionRepository solutionRepo;
     private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepo, SolutionRepository solutionRepo, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepo, UserRepository userRepository, SolutionRepository solutionRepo, TaskMapper taskMapper) {
         this.taskRepo = taskRepo;
+        this.userRepository = userRepository;
         this.solutionRepo = solutionRepo;
         this.taskMapper = taskMapper;
     }
@@ -78,7 +82,7 @@ public class TaskService {
         solution.setCreatedTime(LocalDateTime.now());
         TaskEntity task = taskRepo.findByTaskId(solution.getTask().getTaskId());
         ResultDTO result = new ResultDTO();
-        if (task.getSectionEntity().getId() == 1) {
+        if (task.getSectionEntity().getId() < 2 ) {
             TaskRunner taskRunner = new TaskRunner();
 
             try {
@@ -94,6 +98,22 @@ public class TaskService {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+
+           /* try {
+
+
+
+
+                int id = solution.getUser().getId();
+                UserEntity user = userRepository.findById(id);
+                 SqlResolver sr =new SqlResolver();
+              //  SqlResolver sr = new SqlResolver((user.getEmail()).replace("@", "").replace(".", ""));
+             //   sr.prepareTables(taskRepo.findByTaskId(solution.getTask().getTaskId()).getSourceTemplate());
+                result.setResult(sr.executeSql(solution.getSolutionValue()).toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }*/
         }
         solution.setTestResult(result.getResult());
         solutionRepo.save(solution);
