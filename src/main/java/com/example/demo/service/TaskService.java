@@ -1,6 +1,6 @@
 /*
  * Developed by Andrey Yelmanov
- * Copyright (c) 2018.
+ * Copyright (c) 2019.
  */
 
 package com.example.demo.service;
@@ -16,6 +16,7 @@ import com.example.demo.service.dto.TasksDTO;
 import com.example.demo.service.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class TaskService {
 
     private final TaskRepository taskRepo;
@@ -36,6 +38,7 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
+    @Transactional(readOnly = true)
     public TasksDTO findAll() {
         TasksDTO tasks = new TasksDTO();
         List<TaskEntity> tasksList = taskRepo.findAll();
@@ -43,6 +46,7 @@ public class TaskService {
         return tasks;
     }
 
+    @Transactional(readOnly = true)
     public TasksDTO randomTasks(Integer number) throws Exception {
         if (number > taskRepo.count()) {
             throw new Exception("Too many tasks in Request");
@@ -59,6 +63,7 @@ public class TaskService {
         return tasks;
     }
 
+    @Transactional(readOnly = true)
     public TaskEntity findTaskById(int taskId) {
         return taskRepo.findByTaskId(taskId);
     }
