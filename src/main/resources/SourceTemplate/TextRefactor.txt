@@ -1,5 +1,5 @@
 
-import com.example.demo.service.core.TaskLogger;
+import TaskLogger;
 
 import java.io.IOException;
 

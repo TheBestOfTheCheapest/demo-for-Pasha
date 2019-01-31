@@ -10,7 +10,7 @@ timestamp '2018-07-10 18:00:00',
 }',
 'import java.io.IOException;
 import java.util.Random;
-import com.example.demo.service.core.TaskLogger;
+import ru.digitalleague.demo.service.core.TaskLogger;
 
 public class MatrixSumm {
     private int[][] a = new int[5][5];
@@ -63,7 +63,7 @@ timestamp '2018-07-10 18:00:00',
         'import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
-import com.example.demo.service.core.TaskLogger;
+import ru.digitalleague.demo.service.core.TaskLogger;
 public class ArraySort {
     private int[] a = new int[1000];
 
@@ -111,7 +111,7 @@ timestamp '2018-07-10 18:00:00',
 'TextRefactor',
 'Вам дан текст, в которой в случайном порядке вставлен символ ''s'', вам необходимо восстановить исходный текст и определить номер последней буквы "Ф". Напишите реализацию метода, не изменяя сигнатуру метода и уже заданных в шаблоне переменных.',
 'public int result(String text) {  //write your code here    return text; }',
-'import com.example.demo.service.core.TaskLogger;
+'import ru.digitalleague.demo.service.core.TaskLogger;
 
 import java.io.IOException;
 
