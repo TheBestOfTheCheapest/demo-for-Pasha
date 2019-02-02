@@ -13,9 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import ru.digitalleague.demo.security.CustomUserDetailsService;
 
 
@@ -39,24 +36,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .authorizeRequests()
-                    .antMatchers( "/api/**").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/api/**").authenticated()
                     .anyRequest().authenticated()
+                    .and()
+                .httpBasic()
                 .and()
-                    .formLogin()
-                    .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/home")
-                    .successHandler(new SimpleUrlAuthenticationSuccessHandler())
-                    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+                .formLogin()
+                    .loginPage("/login")
                     .permitAll()
-                .and()
-                    .httpBasic()
-                .and()
-                    .csrf().disable()
-                    .logout()
-                    .logoutUrl("/api/logout")
-                    .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+                    .and()
+                .logout()
                     .permitAll();
 
     }
@@ -66,6 +59,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(this.userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
-
 
 }
