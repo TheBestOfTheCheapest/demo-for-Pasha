@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.digitalleague.demo.service.dto.UserDTO;
+import ru.digitalleague.demo.service.mapper.UserMapper;
 
 import java.time.LocalDateTime;
 
@@ -19,11 +21,14 @@ public class UserService {
 
     private final UserRepository userRepo;
 
+    private final UserMapper userMapper;
+
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    public UserService(UserRepository userRepo) {
+    public UserService(UserRepository userRepo, UserMapper userMapper) {
         this.userRepo = userRepo;
+        this.userMapper = userMapper;
     }
 
     public Integer auth(UserEntity user){
@@ -43,4 +48,12 @@ public class UserService {
     }
 
 
+    public UserEntity registerUser(UserDTO user) {
+        UserEntity newUser = userMapper.toEntity(user);
+
+        newUser.setPassword(user.getFirstName());
+        return userRepo.save(newUser);
+
+
+    }
 }

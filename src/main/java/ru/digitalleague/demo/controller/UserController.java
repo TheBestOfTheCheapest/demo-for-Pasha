@@ -5,6 +5,7 @@
 
 package ru.digitalleague.demo.controller;
 
+import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.service.UserService;
 import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
@@ -37,6 +38,13 @@ public class UserController {
         Integer userId = userService.auth(userMapper.toEntity(userDto));
         log.info("User id was retrieved");
         return new ResponseEntity<>("\"userId\" : " +userId, HttpStatus.FOUND);
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerUser(@RequestBody UserDTO user){
+        UserEntity newUser = userService.registerUser(user);
+        log.info("User {} was created", newUser.getEmail());
     }
 
 }

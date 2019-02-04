@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.digitalleague.demo.security.CustomUserDetailsService;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration
@@ -39,9 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/swagger-ui.html").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/api/user/register").anonymous()
+                    .antMatchers("swagger-ui.html").anonymous()
                     .antMatchers("/api/**").authenticated()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                     .and()
                 .httpBasic()
                 .and()
@@ -50,7 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .logout()
-                    .permitAll();
+                    .permitAll()
+                .and()
+                .csrf().disable();
 
     }
 

@@ -5,6 +5,8 @@
 
 package ru.digitalleague.demo.repository;
 
+import org.hibernate.sql.Select;
+import org.springframework.data.jpa.repository.Query;
 import ru.digitalleague.demo.domain.SolutionEntity;
 import ru.digitalleague.demo.domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
