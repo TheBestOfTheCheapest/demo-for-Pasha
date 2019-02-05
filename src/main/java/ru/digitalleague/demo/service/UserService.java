@@ -5,19 +5,22 @@
 
 package ru.digitalleague.demo.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.digitalleague.demo.domain.UserEntity;
-import ru.digitalleague.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.digitalleague.demo.domain.UserEntity;
+import ru.digitalleague.demo.repository.UserRepository;
 import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
 
 import java.time.LocalDateTime;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepo;
@@ -32,8 +35,8 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public Integer auth(UserEntity user){
-        if(userRepo.existsByEmail(user.getEmail())){
+    public Integer auth(UserEntity user) {
+        if (userRepo.existsByEmail(user.getEmail())) {
             log.info("User with email {} is already exist and was retrieved", user.getEmail());
             return userRepo.findByEmail(user.getEmail()).getId();
         }
@@ -50,11 +53,16 @@ public class UserService {
 
 
     public UserEntity registerUser(UserDTO user) {
+        if (userRepo.findByEmail(user.getEmail()) != null) {
+            throw new AccountExpiredException("User already exists");
+        }
+
         UserEntity newUser = userMapper.toEntity(user);
-
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.getFirstName()));
-        return userRepo.save(newUser);
+        newUser.setCreatedDate(LocalDateTime.now());
+        userRepo.save(newUser);
 
-
+        log.info("New User was created with email: {}", user.getEmail());
+        return newUser;
     }
 }
