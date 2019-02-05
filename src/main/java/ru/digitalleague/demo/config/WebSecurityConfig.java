@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.digitalleague.demo.security.CustomUserDetailsService;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration
