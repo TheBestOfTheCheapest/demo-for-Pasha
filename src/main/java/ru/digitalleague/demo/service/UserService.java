@@ -5,6 +5,7 @@
 
 package ru.digitalleague.demo.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.repository.UserRepository;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class UserService {
     public UserEntity registerUser(UserDTO user) {
         UserEntity newUser = userMapper.toEntity(user);
 
-        newUser.setPassword(user.getFirstName());
+        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getFirstName()));
         return userRepo.save(newUser);
 
 

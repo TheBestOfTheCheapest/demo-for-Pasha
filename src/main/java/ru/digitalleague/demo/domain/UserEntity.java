@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -52,6 +54,12 @@ public class UserEntity {
 
     @Column(name = "password")
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_authority",
+    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+    private Set<AuthorityEntity> authorities = new HashSet<>();
 
     @OneToMany(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -134,6 +142,14 @@ public class UserEntity {
         this.password = password;
     }
 
+    public Set<AuthorityEntity> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<AuthorityEntity> authorities) {
+        this.authorities = authorities;
+    }
+
     public List<SolutionEntity> getSolutions() {
         return solutions;
     }
@@ -161,6 +177,8 @@ public class UserEntity {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                ", solutions=" + solutions +
                 '}';
     }
 }

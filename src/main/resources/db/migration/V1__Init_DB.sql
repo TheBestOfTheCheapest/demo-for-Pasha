@@ -48,4 +48,17 @@ CREATE TABLE solution
     test_result varchar(2048),
     CONSTRAINT solution_users_id_fk FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT solution_tasks_id_fk FOREIGN KEY (task_id) REFERENCES task (id)
+);
+
+CREATE TABLE authority
+(
+  name varchar(255) NOT NULL, PRIMARY KEY (name)
+);
+
+CREATE TABLE user_authority
+(
+    user_id int NOT NULL ,
+    authority_name varchar(255) NOT NULL , PRIMARY KEY (user_id, authority_name),
+    CONSTRAINT authority_authority_name_fk FOREIGN KEY (authority_name) REFERENCES authority,
+    CONSTRAINT authority_users_id_fk FOREIGN KEY (user_id) REFERENCES users
 )

@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.repository.UserRepository;
@@ -30,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity user = this.userRepo.findByEmail(email);
-        return new User(user.getEmail(),new BCryptPasswordEncoder().encode(user.getPassword()), AuthorityUtils.createAuthorityList("USER"));
+        return new User(user.getEmail(),user.getPassword(), AuthorityUtils.createAuthorityList(AuthoritiesConstants.ADMIN));
        // return new User("user",new BCryptPasswordEncoder().encode("u"), AuthorityUtils.createAuthorityList("USER"));
     }
 }

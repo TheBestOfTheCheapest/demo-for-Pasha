@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/user/register").anonymous()
                     .antMatchers("swagger-ui.html").anonymous()
                     .antMatchers("/api/**").authenticated()
-                    .anyRequest().permitAll()
+                    .anyRequest().authenticated()
                     .and()
                 .httpBasic()
                 .and()

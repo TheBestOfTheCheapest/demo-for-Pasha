@@ -35,18 +35,11 @@ public class SwaggerConfig {
                     .paths(PathSelectors.any())
                     .build()
                 .securitySchemes(Collections.singletonList(securityScheme()));
-             //   .securityContexts(newArrayList(securityContext()));
     }
 
     private SecurityScheme securityScheme(){
         return new BasicAuth("basicAuth");
     }
-
-   // private SecurityContext securityContext() {
-    //    return  SecurityContext.builder()
-                //.securityReferences(defaultAuth())
-      //          .forPaths(PathSelectors.regex("/api/*"));
-    //}
 
     @Bean
     SecurityConfiguration security(){
@@ -57,7 +50,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfo(
-                "REST API for CV application and online University",
+                "REST API of application for Interview and online University",
                 "Hello there! We wrote a new service for our company. Have a fun!",
                 "API v1.0",
                 "Terms of service",
