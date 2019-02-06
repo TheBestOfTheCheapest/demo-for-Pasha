@@ -18,6 +18,9 @@ public class AuthorityEntity {
     @Column(name = "name")
     private String name;
 
+    public AuthorityEntity() {
+    }
+
     public String getName() {
         return name;
     }

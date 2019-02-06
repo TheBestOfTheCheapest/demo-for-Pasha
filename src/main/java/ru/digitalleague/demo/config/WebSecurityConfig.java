@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.digitalleague.demo.security.AuthoritiesConstants;
 import ru.digitalleague.demo.security.CustomUserDetailsService;
 
 
@@ -40,10 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/api/user/register").anonymous()
-                    .antMatchers("swagger-ui.html").anonymous()
+                    .antMatchers("/api/user/register").permitAll()
+                    .antMatchers("swagger-ui.html").hasAuthority(AuthoritiesConstants.ADMIN)
                     .antMatchers("/api/**").authenticated()
-                    .anyRequest().authenticated()
+                    .anyRequest().fullyAuthenticated()
                     .and()
                 .httpBasic()
                 .and()

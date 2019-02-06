@@ -55,7 +55,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
     joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
     inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
@@ -76,6 +76,17 @@ public class UserEntity {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public UserEntity(LocalDateTime createdDate, LocalDateTime updatedDate, @NotNull @Size(max = 64) String firstName, @Size(max = 64) String middleName, @NotNull @Size(max = 64) String lastName, @NotNull @Email @Size(max = 64) String email, String password, Set<AuthorityEntity> authorities) {
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     public Integer getId() {
