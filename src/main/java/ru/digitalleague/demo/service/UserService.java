@@ -12,12 +12,16 @@ import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.digitalleague.demo.domain.AuthorityEntity;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.repository.UserRepository;
+import ru.digitalleague.demo.security.AuthoritiesConstants;
 import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -52,14 +56,17 @@ public class UserService {
     }
 
 
-    public UserEntity registerUser(UserDTO user) {
+    public UserEntity registerUser(UserDTO user, String password) {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             throw new AccountExpiredException("User already exists");
         }
 
         UserEntity newUser = userMapper.toEntity(user);
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getFirstName()));
+        newUser.setPassword(new BCryptPasswordEncoder().encode(password));
         newUser.setCreatedDate(LocalDateTime.now());
+        HashSet<AuthorityEntity> authorities = new HashSet<>();
+       // authorities.stream().map(AuthorityEntity::getName).collect(Collectors.toSet());
+        newUser.setAuthorities(authorities);
 
         userRepo.save(newUser);
 

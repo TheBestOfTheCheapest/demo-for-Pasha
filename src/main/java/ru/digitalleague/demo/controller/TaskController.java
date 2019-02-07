@@ -5,9 +5,11 @@
 
 package ru.digitalleague.demo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import ru.digitalleague.demo.controller.exceptions.NotFoundException;
 import ru.digitalleague.demo.domain.SolutionEntity;
 import ru.digitalleague.demo.domain.TaskEntity;
+import ru.digitalleague.demo.security.AuthoritiesConstants;
 import ru.digitalleague.demo.service.TaskService;
 import ru.digitalleague.demo.service.dto.ResultDTO;
 import ru.digitalleague.demo.service.dto.SolutionDTO;
@@ -82,6 +84,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/task")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public boolean deleteTask(@RequestParam int taskId) {
         log.info("Task {} was deleted", taskId);
         taskService.deleteTask(taskId);
