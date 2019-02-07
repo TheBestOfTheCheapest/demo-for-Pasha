@@ -60,6 +60,7 @@ public class UserService {
         UserEntity newUser = userMapper.toEntity(user);
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.getFirstName()));
         newUser.setCreatedDate(LocalDateTime.now());
+
         userRepo.save(newUser);
 
         log.info("New User was created with email: {}", user.getEmail());

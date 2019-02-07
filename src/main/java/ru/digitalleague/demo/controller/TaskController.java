@@ -57,7 +57,6 @@ public class TaskController {
     @ResponseBody
     public ResponseEntity<TaskDTO> showConcreteTask(@RequestParam int taskId) {
         TaskEntity task = taskService.findTaskById(taskId);
-        //TaskEntity task = taskService.findTaskById(taskId);
         if (task == null) {
             log.error("Request to the task with id {}, which not exist", taskId);
             throw new NotFoundException();

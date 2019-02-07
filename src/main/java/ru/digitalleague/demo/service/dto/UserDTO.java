@@ -5,7 +5,11 @@
 
 package ru.digitalleague.demo.service.dto;
 
+import ru.digitalleague.demo.domain.AuthorityEntity;
 import ru.digitalleague.demo.domain.UserEntity;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
@@ -14,6 +18,7 @@ public class UserDTO {
     private String middleName;
     private String lastName;
     private String email;
+    private Set<String> authorities;
 
     public UserDTO() {
     }
@@ -24,6 +29,9 @@ public class UserDTO {
         this.middleName = user.getMiddleName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
+        this.authorities = user.getAuthorities().stream()
+                .map(AuthorityEntity::getName)
+                .collect(Collectors.toSet());
     }
 
     public Integer getId() {
@@ -64,5 +72,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 }
