@@ -39,6 +39,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .collect(Collectors.toList());
         return new User(user.getEmail(),user.getPassword(), grantedAuthorities);
         //return new User(user.getEmail(),user.getPassword(), AuthorityUtils.createAuthorityList(AuthoritiesConstants.ADMIN));
-       // return new User("user",new BCryptPasswordEncoder().encode("u"), AuthorityUtils.createAuthorityList("USER"));
     }
 }
