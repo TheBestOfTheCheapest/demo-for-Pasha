@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.digitalleague.demo.controller.exceptions.NotFoundException;
+import ru.digitalleague.demo.controller.exceptions.InvalidPasswordException;
 import ru.digitalleague.demo.controller.utils.ManagedUser;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.service.UserService;
@@ -37,6 +37,7 @@ public class UserController {
     }
 
 
+    @Deprecated
     @PostMapping("/auth")
     public ResponseEntity<String> logIn(@RequestBody UserDTO userDto) {
         Integer userId = userService.auth(userMapper.toEntity(userDto));
@@ -48,7 +49,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@Valid @RequestBody ManagedUser user) {
         if (!passwordCheacker(user.getPassword()))
-            throw new NotFoundException();
+            throw new InvalidPasswordException();
 
         UserEntity newUser = userService.registerUser(user, user.getPassword());
         log.info("User {} was created", newUser.getEmail());
