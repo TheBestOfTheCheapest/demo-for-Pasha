@@ -68,6 +68,7 @@ public class TaskController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO taskDto) {
         log.info("New task was added");
         TaskEntity newTask = taskService.add(taskDto);
