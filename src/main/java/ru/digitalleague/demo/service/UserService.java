@@ -76,4 +76,9 @@ public class UserService {
         log.info("New User was created with email: {}", user.getEmail());
         return newUser;
     }
+
+    @Transactional(readOnly = true)
+    public UserDTO findUserByFirstNameAndLastName(String firstName, String lastName){
+        return userMapper.toDto(userRepo.findAllByFirstNameAndLastName(firstName, lastName));
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public interface SolutionRepository extends JpaRepository<SolutionEntity, Long> {
 
     List<SolutionEntity> findAll();
-    List<SolutionEntity> findAllByUser(UserEntity user);
+    List<SolutionEntity> findAllByUserOrderByCreatedTime(UserEntity user);
     SolutionEntity findById(int id);
 
 
