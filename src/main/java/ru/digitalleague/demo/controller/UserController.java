@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.digitalleague.demo.controller.exceptions.InvalidPasswordException;
+import ru.digitalleague.demo.controller.exceptions.NotFoundException;
 import ru.digitalleague.demo.controller.utils.ManagedUser;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.service.UserService;
@@ -53,6 +54,15 @@ public class UserController {
 
         UserEntity newUser = userService.registerUser(user, user.getPassword());
         log.info("User {} was created", newUser.getEmail());
+    }
+
+    @GetMapping("/findUserByEmail")
+    public ResponseEntity<UserDTO> findUserByEmailWithAuthorities(@RequestParam String email){
+        UserDTO user = userService.findUserByEmailWithAuthorities(email);
+        if (user == null){
+            throw new NotFoundException();
+        }
+        return new ResponseEntity<>(user, HttpStatus.FOUND);
     }
 
     private boolean passwordCheacker(String password) {

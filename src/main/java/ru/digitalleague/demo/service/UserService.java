@@ -81,4 +81,9 @@ public class UserService {
     public UserDTO findUserByFirstNameAndLastName(String firstName, String lastName){
         return userMapper.toDto(userRepo.findAllByFirstNameAndLastName(firstName, lastName));
     }
+
+    @Transactional(readOnly = true)
+    public UserDTO findUserByEmailWithAuthorities(String email){
+        return userMapper.toDto(userRepo.findOneWithAuthoritiesByEmail(email));
+    }
 }

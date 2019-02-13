@@ -5,10 +5,10 @@
 
 package ru.digitalleague.demo.service.mapper;
 
+import org.springframework.stereotype.Service;
 import ru.digitalleague.demo.domain.AuthorityEntity;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.service.dto.UserDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +35,7 @@ public class UserMapper implements EntityMapper<UserDTO, UserEntity> {
 
     @Override
     public UserDTO toDto(UserEntity entity) {
-        if(entity == null){
+        if (entity == null) {
             return null;
         }
         UserDTO user = new UserDTO();
@@ -45,7 +45,8 @@ public class UserMapper implements EntityMapper<UserDTO, UserEntity> {
         user.setMiddleName(entity.getMiddleName());
         user.setEmail(entity.getEmail());
         user.setAuthorities(entity.getAuthorities().stream().map(AuthorityEntity::getName).collect(Collectors.toSet()));
-        throw new UnsupportedOperationException();
+//        throw new UnsupportedOperationException();
+        return user;
     }
 
     @Override
@@ -65,9 +66,9 @@ public class UserMapper implements EntityMapper<UserDTO, UserEntity> {
     private Set<AuthorityEntity> authoritiesFromStrings(Set<String> authoritiesAsStrings) {
         Set<AuthorityEntity> authorities = new HashSet<>();
 
-        if (authoritiesAsStrings != null){
-            authorities= authoritiesAsStrings.stream()
-                    .map(string->{
+        if (authoritiesAsStrings != null) {
+            authorities = authoritiesAsStrings.stream()
+                    .map(string -> {
                         AuthorityEntity auth = new AuthorityEntity();
                         auth.setName(string);
                         return auth;
@@ -75,6 +76,6 @@ public class UserMapper implements EntityMapper<UserDTO, UserEntity> {
                     .collect(Collectors.toSet());
         }
 
-            return authorities;
+        return authorities;
     }
 }
