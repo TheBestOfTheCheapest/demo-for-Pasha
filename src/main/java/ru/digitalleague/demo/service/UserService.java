@@ -78,6 +78,10 @@ public class UserService {
         return newUser;
     }
 
+    public void chagePassword(String currentPassword, String newPassword){
+
+    }
+
     @Transactional(readOnly = true)
     public List<UserDTO> findAll(){
         return userMapper.toDto(userRepo.findAll());

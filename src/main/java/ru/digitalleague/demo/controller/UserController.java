@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.digitalleague.demo.controller.exceptions.InvalidPasswordException;
 import ru.digitalleague.demo.controller.exceptions.NotFoundException;
 import ru.digitalleague.demo.controller.utils.ManagedUser;
 import ru.digitalleague.demo.domain.UserEntity;
+import ru.digitalleague.demo.security.AuthoritiesConstants;
 import ru.digitalleague.demo.service.UserService;
 import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
@@ -65,6 +67,7 @@ public class UserController {
         log.info("User {} was created", newUser.getEmail());
     }
 
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     @GetMapping("/findUserByEmail")
     public ResponseEntity<UserDTO> findUserByEmailWithAuthorities(@RequestParam String email){
         UserDTO user = userService.findUserByEmailWithAuthorities(email);
@@ -74,6 +77,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.FOUND);
     }
 
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     @GetMapping("/findUserByNames")
     public ResponseEntity<UserDTO> findUserByNames(@RequestParam String firstName,
                                                    @RequestParam String lastName){
