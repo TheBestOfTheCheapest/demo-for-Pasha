@@ -20,6 +20,7 @@ import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:9000")
 @RestController
@@ -37,6 +38,14 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<UserDTO>> showAllUsers(){
+        List<UserDTO> users = userService.findAll();
+        if (users.isEmpty())
+            throw new NotFoundException();
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
     @Deprecated
     @PostMapping("/auth")
@@ -49,7 +58,7 @@ public class UserController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@Valid @RequestBody ManagedUser user) {
-        if (!passwordCheacker(user.getPassword()))
+        if (!passwordChecker(user.getPassword()))
             throw new InvalidPasswordException();
 
         UserEntity newUser = userService.registerUser(user, user.getPassword());
@@ -65,7 +74,17 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.FOUND);
     }
 
-    private boolean passwordCheacker(String password) {
+    @GetMapping("/findUserByNames")
+    public ResponseEntity<UserDTO> findUserByNames(@RequestParam String firstName,
+                                                   @RequestParam String lastName){
+        UserDTO user = userService.findUserByFirstNameAndLastName(firstName, lastName);
+        if (user == null){
+            throw new NotFoundException();
+        }
+        return new ResponseEntity<>(user, HttpStatus.FOUND);
+    }
+
+    private boolean passwordChecker(String password) {
         return password.length() >= ManagedUser.PASSWORD_MIN_LENGTH &&
                 password.length() <= ManagedUser.PASSWORD_MAX_LENGTH;
     }

@@ -21,6 +21,7 @@ import ru.digitalleague.demo.service.mapper.UserMapper;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @Transactional
@@ -75,6 +76,11 @@ public class UserService {
 
         log.info("New User was created with email: {}", user.getEmail());
         return newUser;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserDTO> findAll(){
+        return userMapper.toDto(userRepo.findAll());
     }
 
     @Transactional(readOnly = true)
