@@ -18,6 +18,7 @@ import ru.digitalleague.demo.controller.utils.ManagedUser;
 import ru.digitalleague.demo.domain.UserEntity;
 import ru.digitalleague.demo.security.AuthoritiesConstants;
 import ru.digitalleague.demo.service.UserService;
+import ru.digitalleague.demo.service.dto.ChangePasswordDTO;
 import ru.digitalleague.demo.service.dto.UserDTO;
 import ru.digitalleague.demo.service.mapper.UserMapper;
 
@@ -86,6 +87,15 @@ public class UserController {
             throw new NotFoundException();
         }
         return new ResponseEntity<>(user, HttpStatus.FOUND);
+    }
+
+    @PostMapping("/changePassword")
+    public void changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        if(!passwordChecker(changePasswordDTO.getNewPassword())
+                && !changePasswordDTO.getNewPassword().isEmpty()){
+            throw new InvalidPasswordException();
+        }
+        userService.changePassword(changePasswordDTO.getCurrentPassword(), changePasswordDTO.getNewPassword());
     }
 
     private boolean passwordChecker(String password) {

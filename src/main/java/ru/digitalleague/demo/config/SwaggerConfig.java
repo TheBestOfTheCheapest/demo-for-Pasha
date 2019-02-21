@@ -10,16 +10,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.BasicAuth;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.SecurityScheme;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @EnableSwagger2
@@ -34,11 +33,21 @@ public class SwaggerConfig {
                     .apis(RequestHandlerSelectors.basePackage("ru.digitalleague.demo.controller"))
                     .paths(PathSelectors.any())
                     .build()
+                .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Collections.singletonList(securityScheme()));
     }
 
     private SecurityScheme securityScheme(){
         return new BasicAuth("basicAuth");
+    }
+
+    private SecurityContext securityContext(){
+        return SecurityContext.builder()
+                .securityReferences(
+                        Arrays.asList(new SecurityReference("basicAuth",new AuthorizationScope[] { new AuthorizationScope("read", "for read op")}))
+                )
+                .forPaths(PathSelectors.regex("/tasks*"))
+                .build();
     }
 
     @Bean

@@ -8,6 +8,9 @@ package ru.digitalleague.demo.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,22 +81,30 @@ public class UserService {
         return newUser;
     }
 
-    public void chagePassword(String currentPassword, String newPassword){
+    public void changePassword(String currentPassword, String newPassword) {
+        UserDetails springSecurityUser = null; //FixMe
+        SecurityContext securityContext = (SecurityContext) SecurityContextHolder.getContext().getAuthentication();
+        if (securityContext.getAuthentication().getPrincipal() instanceof UserDetails) {
+            springSecurityUser = (UserDetails) securityContext.getAuthentication().getPrincipal();
+        } else {
+            securityContext.getAuthentication().toString();
+        }
+
 
     }
 
     @Transactional(readOnly = true)
-    public List<UserDTO> findAll(){
+    public List<UserDTO> findAll() {
         return userMapper.toDto(userRepo.findAll());
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findUserByFirstNameAndLastName(String firstName, String lastName){
+    public UserDTO findUserByFirstNameAndLastName(String firstName, String lastName) {
         return userMapper.toDto(userRepo.findAllByFirstNameAndLastName(firstName, lastName));
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findUserByEmailWithAuthorities(String email){
+    public UserDTO findUserByEmailWithAuthorities(String email) {
         return userMapper.toDto(userRepo.findOneWithAuthoritiesByEmail(email));
     }
 }
